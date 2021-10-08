@@ -13,7 +13,6 @@ code {
 }
 
 .main {
-  min-height: 100vh;
   background-color: white;
   position: relative;
 }

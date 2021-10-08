@@ -9,6 +9,7 @@ import {
 
 import AboutMe from "./tabs/aboutMe";
 import Contact from "./tabs/contact";
+import Footer from "./banners/footer";
 import Navbar from "./banners/navbar";
 import PersonalProjects from "./tabs/personalProjects";
 import ProfessionalBackground from "./tabs/professionalBackground";
@@ -40,6 +41,7 @@ const Main = () => {
           </Route>
         </Switch>
       </Router>
+      <Footer />
     </div>
   );
 };

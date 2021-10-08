@@ -1,27 +1,17 @@
-import { StyledA, StyledNavbar } from "../shared/styledComponents";
-
-import { Link } from "react-router-dom";
+import Link from "../shared/link";
+import { StyledNavbar } from "../shared/styledComponents";
 
 const Navbar = () => {
   return (
     <StyledNavbar>
-      <StyledA>
-        <Link to="/AboutMe">About me </Link>
-      </StyledA>
-      <StyledA>
-        <Link to="/Resume">Resume </Link>
-      </StyledA>
-      <StyledA>
-        <Link to="/ProfessionalAccomplishments">
-          Professional Accomplishments{" "}
-        </Link>
-      </StyledA>
-      <StyledA>
-        <Link to="/PersonalProjects">Personal Projects </Link>
-      </StyledA>
-      <StyledA>
-        <Link to="/Contact">Contact </Link>
-      </StyledA>
+      <Link url="/AboutMe" name="About Me" />
+      <Link url="/Resume" name="Resume" />
+      <Link
+        url="/ProfessionalAccomplishments"
+        name="Professional Accomplishments"
+      />
+      <Link url="/PersonalProjects" name="Personal Projects" />
+      <Link url="/Contact" name="Contact" />
     </StyledNavbar>
   );
 };
