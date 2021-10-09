@@ -1,4 +1,4 @@
-import "./index.css";
+import "./index.scss";
 
 import Main from "./main";
 import React from "react";

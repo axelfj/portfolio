@@ -1,19 +1,13 @@
-import {
-  Link,
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import AboutMe from "./tabs/aboutMe";
-import Contact from "./tabs/contact";
-import Footer from "./banners/footer";
-import Navbar from "./banners/navbar";
-import PersonalProjects from "./tabs/personalProjects";
-import ProfessionalBackground from "./tabs/professionalBackground";
-import Resume from "./tabs/resume";
+import AboutMe from "./tabs/aboutMe/aboutMe";
+import Contact from "./tabs/contact/contact";
+import Credits from "./tabs/credits/credits";
+import Footer from "./banners/footer/footer";
+import Navbar from "./banners/navbar/navbar";
+import PersonalProjects from "./tabs/personalProjects/personalProjects";
+import ProfessionalBackground from "./tabs/professionalBackground/professionalBackground";
+import Resume from "./tabs/resume/resume";
 
 const Main = () => {
   return (
@@ -27,8 +21,7 @@ const Main = () => {
             <AboutMe />
           </Route>
           <Route path="/Resume">
-            {" "}
-            <Resume />{" "}
+            <Resume />
           </Route>
           <Route path="/ProfessionalAccomplishments">
             <ProfessionalBackground />
@@ -38,6 +31,9 @@ const Main = () => {
           </Route>
           <Route path="/Contact">
             <Contact />
+          </Route>
+          <Route path="/Credits">
+            <Credits />
           </Route>
         </Switch>
       </Router>

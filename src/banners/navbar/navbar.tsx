@@ -1,9 +1,10 @@
-import Link from "../shared/link";
-import { StyledNavbar } from "../shared/styledComponents";
+import "./navbar.scss";
+
+import Link from "../../shared/link/link";
 
 const Navbar = () => {
   return (
-    <StyledNavbar>
+    <div className="navbar">
       <Link url="/AboutMe" name="About Me" />
       <Link url="/Resume" name="Resume" />
       <Link
@@ -12,7 +13,8 @@ const Navbar = () => {
       />
       <Link url="/PersonalProjects" name="Personal Projects" />
       <Link url="/Contact" name="Contact" />
-    </StyledNavbar>
+      <Link url="/Credits" name="Credits" />
+    </div>
   );
 };
 

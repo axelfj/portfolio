@@ -2,13 +2,7 @@ import { ClientRequest } from "http";
 
 const Resume = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        verticalAlign: "bottom",
-      }}
-    >
+    <div>
       <h1>Education</h1>
       <h1>Work Experience</h1>
       <h1>Professional Qualification and Certifications</h1>
