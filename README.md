@@ -1,34 +1,79 @@
-# Portfolio Starter Kit
+![Astro Sphere Lighthouse Score](_astrosphere.jpg)
 
-This portfolio is built with **Next.js** and a library called [Nextra](https://nextra.vercel.app/). It allows you to write Markdown and focus on the _content_ of your portfolio. This starter includes:
+Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on my personal website.
+It is primarily Astro, Tailwind and Typescript, with a very small amount of SolidJS for stateful components.
 
-- Automatically configured to handle Markdown/MDX
-- Generates an RSS feed based on your posts
-- A beautiful theme included out of the box
-- Easily categorize posts with tags
-- Fast, optimized web font loading
+## 🚀 Deploy your own
 
-## Configuration
+[![Deploy with Vercel](_deploy_vercel.svg)](https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-sphere)  [![Deploy with Netlify](_deploy_netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-sphere)
 
-1. Update your name in `theme.config.js` or change the footer.
-1. Update your name and site URL for the RSS feed in `scripts/gen-rss.js`.
-1. Update the meta tags in `pages/_document.js`.
-1. Update the posts inside `pages/posts/*.md` with your own content.
+## 📋 Features
 
-## Deploy your own
+- ✅ 100/100 Lighthouse performance
+- ✅ Responsive
+- ✅ Accessible
+- ✅ SEO-friendly
+- ✅ Typesafe
+- ✅ Minimal style
+- ✅ Light/Dark Theme
+- ✅ Animated UI
+- ✅ Tailwind styling
+- ✅ Auto generated sitemap
+- ✅ Auto generated RSS Feed
+- ✅ Markdown support
+- ✅ MDX Support (components in your markdown)
+- ✅ Searchable content (posts and projects)
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+## 💯 Lighthouse score
+![Astro Sphere Lighthouse Score](_lighthouse.png)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/nextjs-portfolio-starter&project-name=portfolio&repository-name=portfolio)
+## 🕊️ Lightweight
+All pages under 100kb (including fonts)
 
-## How to use
+## ⚡︎ Fast
+Rendered in ~40ms on localhost
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+## 📄 Configuration
 
-```bash
-npx create-next-app --example blog my-blog
-# or
-yarn create next-app --example blog my-blog
-```
+The blog posts on the demo serve as the documentation and configuration.
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## 💻 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run dev:network`     | Starts dev server on local network               |
+| `npm run sync`            | Generates TypeScript types for all Astro modules.|
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run preview:network` | Starts preview server on local network           |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| `npm run lint`            | Run ESLint                                       |
+| `npm run lint:fix`        | Auto-fix ESLint issues                           |
+
+## 🗺️ Roadmap
+
+A few features I plan to implement
+- ⬜ Code Blocks - copy to clipboard
+- ⬜ Article Pages - Table of Contents
+- ⬜ Article Pages - Share on social media
+
+## ✨ Acknowledgement
+
+Repo inspired by [Mark Horn](https://github.com/markhorn-dev/astro-sphere)
+
+
+## 🏛️ License
+
+MIT
+
+# 0.0.1 Deploy
+
+First version is a copy of the website built by Mark Horn. 
+My intention is to really exploit this template and build something on top that suits my personality and engineer perspective.
