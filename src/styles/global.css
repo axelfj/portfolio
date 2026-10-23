@@ -10,7 +10,7 @@
     font-style: normal;
     font-display: swap;
   }
-  
+
   @font-face {
     font-family: "Atkinson";
     src: url("/fonts/atkinson-bold.woff") format("woff");
@@ -25,7 +25,7 @@ html {
   color-scheme: light;
   background-color: white;
   font-family: "Atkinson", sans-serif;
-  
+
 }
 
 html.dark {
@@ -239,4 +239,33 @@ article img {
  .cv-resume a { color: black !important; }
  .resume-job li { break-inside: avoid; }
  .animate { opacity: 1; transform: none; }
+}
+
+/* A compact, text-led portfolio. */
+.personal-home { max-width: 920px; }
+.personal-home .cv-hero { padding: 148px 0 64px; }
+.personal-home .cv-eyebrow { text-transform: none; letter-spacing: .02em; margin-bottom: 22px; color: inherit; font-weight: 400; }
+.personal-home h1 { font-size: clamp(3rem, 7vw, 5rem); line-height: 1.08; letter-spacing: -.045em; }
+.personal-home .cv-intro { max-width: 640px; font-size: 1.2rem; line-height: 1.75; margin-top: 30px; }
+.personal-note { max-width: 640px; margin-top: 20px; line-height: 1.8; }
+.personal-home .cv-actions { gap: 26px; margin-top: 26px; }
+.personal-home h2 { font-size: 1.45rem; letter-spacing: -.015em; line-height: 1.4; }
+.personal-home .cv-section { padding: 40px 0; }
+.personal-project { display: block; padding: 30px 0; border-bottom: 1px solid #d4d4d4; }
+.personal-project-context { font-size: .85rem; }
+.personal-project h3 { font-size: 1.2rem; font-weight: 700; color: #171717; margin: 8px 0; line-height: 1.5; }
+.personal-project h3 span { display: inline-block; margin-left: 6px; color: #0f766e; }
+.personal-project:hover h3 { text-decoration: underline; text-underline-offset: 5px; }
+.personal-project p, .personal-background p, .personal-contact p { line-height: 1.8; max-width: 640px; }
+.personal-background { display: grid; grid-template-columns: 170px 1fr; gap: 32px; }
+.personal-background p + p { margin-top: 18px; }
+.personal-contact { margin-bottom: 32px; }
+.personal-contact > p { margin-top: 14px; }
+.dark .personal-project h3 { color: #fafafa; }
+.dark .personal-project h3 span { color: #5eead4; }
+@media(max-width: 700px) {
+ .personal-home .cv-hero { padding-top: 126px; padding-bottom: 40px; }
+ .personal-background { grid-template-columns: 1fr; gap: 18px; }
+ .personal-home .cv-intro { font-size: 1.08rem; }
+ .personal-home .cv-actions { gap: 20px; }
 }
