@@ -2,11 +2,18 @@
 import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
 const projects = (await getCollection("projects")).filter(p => !p.data.draft).sort((a,b) => b.data.date.getTime() - a.data.date.getTime())
+const groups = [
+  { id: "professional-work", title: "Professional work", description: "Architecture, design systems, and applications delivered in professional roles.", items: projects.filter(p => !p.data.tags.includes("Early work")) },
+  { id: "engineering-foundations", title: "Engineering foundations · 2017–2018", description: "Early collaborative projects in algorithms and simulation, with dated source snapshots and original team credits.", items: projects.filter(p => p.data.tags.includes("Early work")) },
+]
 ---
-<PageLayout title="Selected work" description="Selected contributions in frontend architecture, enterprise design systems, and internal applications.">
+<PageLayout title="Selected work" description="Professional engineering contributions and early projects in algorithms, simulation, and object-oriented design.">
   <div class="cv-home cv-list-page">
     <p class="cv-eyebrow">Engineering highlights</p><h1>Selected work.</h1>
-    <p class="cv-intro">A closer look at the problems I work on and the decisions I own.</p>
-    <div class="cv-project-list">{projects.map(project => <a href={"/projects/" + project.slug + "/"} class="cv-project"><h2>{project.data.title} <span aria-hidden="true">↗</span></h2><p>{project.data.summary}</p><div class="cv-tags">{project.data.tags.map(tag => <span>{tag}</span>)}</div></a>)}</div>
+    <p class="cv-intro">From algorithm experiments to enterprise architecture: a closer look at the problems I work on.</p>
+    {groups.map(group => <section id={group.id} class="cv-section" aria-labelledby={group.id + "-title"}>
+      <h2 id={group.id + "-title"}>{group.title}</h2><p class="cv-intro">{group.description}</p>
+      <div class="cv-project-list">{group.items.map(project => <a href={"/projects/" + project.slug + "/"} class="cv-project"><h3 class="text-2xl font-bold mb-4">{project.data.title} <span aria-hidden="true">↗</span></h3><p>{project.data.summary}</p><div class="cv-tags">{project.data.tags.map(tag => <span>{tag}</span>)}</div></a>)}</div>
+    </section>)}
   </div>
 </PageLayout>
