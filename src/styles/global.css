@@ -256,4 +256,3 @@ input[type="checkbox"], input[type="range"] { accent-color: var(--accent-solid);
  .resume-job li { break-inside: avoid; }
  .animate { opacity: 1; transform: none; }
 }
-
