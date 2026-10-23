@@ -4,18 +4,22 @@ summary: "A Java strategy-game project modeling armies, unit costs, movement, an
 date: "2019-04-28"
 tags: ["Early work", "Java", "Strategy", "Object-oriented design"]
 category: "games"
-demoStatus: "prototype"
 sourceAccess: "public"
 repoUrl: "https://github.com/axelfj/battle-game"
 legacy: true
+demoStatus: "live"
+demoUrl: "https://axelfernandez.vercel.app/demos/battlefield/"
 ---
 ## The original project
 A console-based strategy game with archers, cavalry, and spearmen. Players build armies within a budget and take turns moving and attacking on a grid.
 
-## Browser adaptation
-A visual board could make unit movement and combat easier to explore. The first step is to define and test the game rules, including valid positions, movement ranges, turn ownership, and damage.
+## Browser adaptation · 2026
+A new visual battlefield uses the original Java unit types, stats, and costs: archers, cavalry, and spearmen. Draft two armies under a budget, then move and attack on an eight-by-eight board. This local two-player interpretation fixes cumulative damage and range checks and documents its simplified turn rules.
 
-## Collaboration and source
-This was collaborative academic work. The source includes contributions attributed to Axel and other team members; a complete team credit remains to be documented before a browser release.
+[Open the interactive demo](/demos/battlefield/).
 
-[Browse the source](https://github.com/axelfj/battle-game). No Java executable or saved-game files are hosted here.
+## Credits and scope
+The collaborative archive attributes work to Axel FJ, andre, and JosePablo. These are source credits, not a claim of sole authorship. The browser implementation is new; no Java runtime or saved-game files are served.
+
+## Historical source
+[Original repository](https://github.com/axelfj/battle-game). The archive preserves the earlier project.

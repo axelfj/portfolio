@@ -1,20 +1,22 @@
 ---
-title: "Poison card game: the project brief"
-summary: "A preserved academic project document; this repository does not currently include a playable implementation."
+title: "Poison: cards, cauldrons, and move history"
+summary: "A browser card game built from an archived academic brief, with undo/redo and poison-card scoring."
 date: "2020-01-28"
 tags: ["Project archive", "Game design"]
 category: "games"
 legacy: true
 sourceAccess: "public"
 repoUrl: "https://github.com/axelfj/poison-card-game"
+demoStatus: "live"
+demoUrl: "https://axelfernandez.vercel.app/demos/poison/"
 ---
-## Legacy project archive
-The current repository contains a README and a project PDF. It is a document archive, not a runnable game. No browser demo or downloadable executable is advertised.
+## Browser adaptation · 2026
+A new pass-and-play implementation follows the archived Veneno brief: suits, three cauldrons, poison hearts, redeals, elimination rounds, and cumulative penalties. Undo and redo expose the move-history stacks. The demo documents its interpretation of ambiguous threshold and tie rules.
 
-The date shown records the repository's creation, not a new release. The original project is preserved for historical and educational context; compatibility with current runtimes has not been verified.
+[Open the interactive demo](/demos/poison/).
 
-## Collaboration
-The available repository does not establish complete author credits. Individual implementation ownership is not asserted.
+## Credits and scope
+The original repository contains a TEC assignment brief and README, not a playable implementation. Historical implementation authorship is not asserted. This browser game is a new implementation from that brief.
 
-## Source and availability
-[Browse the original repository](https://github.com/axelfj/poison-card-game). This catalog page is a static archive; it does not execute the original application.
+## Historical source
+[Original repository](https://github.com/axelfj/poison-card-game). The archive preserves the earlier project.

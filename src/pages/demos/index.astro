@@ -1,0 +1,7 @@
+---
+import PageLayout from '@layouts/PageLayout.astro'
+import {demos} from '../../lib/demos/catalog'
+---
+<PageLayout title="Interactive demos" description="Play games and explore visual algorithms from Axel's project archive.">
+<div class="cv-home cv-list-page"><p class="cv-eyebrow">Try it in your browser</p><h1>Interactive demos</h1><p class="cv-intro">New browser adaptations of earlier projects. Play a round, change a parameter, or step through the algorithm.</p><div class="cv-project-list">{demos.map(d=><a class="cv-project" href={'/demos/'+d.slug+'/'}><h2>{d.title} ↗</h2><p>{d.intro}</p></a>)}<a class="cv-project" href="/demos/ocean/"><h2>Ocean ecosystem ↗</h2><p>Add life and watch a food chain change.</p></a></div></div>
+</PageLayout>
