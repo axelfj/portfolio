@@ -5,7 +5,7 @@ date: "2019-02-04"
 tags: ["Haskell", "Graphs", "Functional programming"]
 category: "engineering"
 legacy: true
-sourceAccess: "public"
+sourceAccess: "private"
 repoUrl: "https://github.com/axelfj/web-interconnected"
 ---
 ## Legacy project archive
@@ -17,4 +17,4 @@ The date shown records the repository's creation, not a new release. The origina
 Complete team attribution is not established by the brief README. No exclusive authorship is claimed.
 
 ## Source and availability
-[Browse the original repository](https://github.com/axelfj/web-interconnected). This catalog page is a static archive; it does not execute the original application.
+[Browse the original repository](https://github.com/axelfj/web-interconnected). Source access is restricted pending a privacy review. This catalog page does not execute the original application.
