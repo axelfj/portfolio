@@ -16,5 +16,4 @@ export const LINKS: Links = [
 export const SOCIALS: Socials = [
   { NAME: "Email", ICON: "email", TEXT: "axelfeji@gmail.com", HREF: "mailto:axelfeji@gmail.com" },
   { NAME: "Github", ICON: "github", TEXT: "/axelfj", HREF: "https://github.com/axelfj" },
-  { NAME: "LinkedIn", ICON: "linkedin", TEXT: "/axelafj", HREF: "https://www.linkedin.com/in/axelafj/" },
 ]
