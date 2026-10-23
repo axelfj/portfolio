@@ -19,8 +19,12 @@ const projects = defineCollection({
     date: z.coerce.date(),
     tags: z.array(z.string()),
     draft: z.boolean().optional(),
-    demoUrl: z.string().optional(),
-    repoUrl: z.string().optional(),
+    demoUrl: z.string().url().optional(),
+    repoUrl: z.string().url().optional(),
+    category: z.enum(["engineering", "simulations", "games"]).default("engineering"),
+    demoStatus: z.enum(["planned", "prototype", "live"]).optional(),
+    sourceAccess: z.enum(["public", "private"]).default("public"),
+    legacy: z.boolean().default(false),
   }),
 })
 
