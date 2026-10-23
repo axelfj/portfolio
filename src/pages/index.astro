@@ -1,46 +1,28 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro"
 import { SITE, SOCIALS } from "@consts"
-const expertise = ["React", "TypeScript", "Next.js", "Redux", "Design systems", "Storybook", "Node.js", ".NET", "Java", "PostgreSQL"]
-const highlights = [
-  { number: "01", title: "Architecture with a path to reuse", text: "Building maintainable frontend applications with reusable components, clear boundaries, and consistent user experiences." },
-  { number: "02", title: "Technical direction, shared delivery", text: "Providing frontend technical leadership and collaborating across product, design, and backend engineering." },
-  { number: "03", title: "Engineering beyond the interface", text: "Experience across Node.js, .NET, Java, and relational databases informs how I design frontend data flows, agree API contracts, and work with backend teams." },
-]
 ---
-<PageLayout title="Senior Software Engineer" description={SITE.DESCRIPTION}>
-  <div class="cv-home">
+<PageLayout title="Software engineer" description={SITE.DESCRIPTION}>
+  <div class="cv-home personal-home">
     <section class="cv-hero" aria-labelledby="intro-title">
-      <p class="cv-eyebrow">Axel Fernández Jiménez · Costa Rica</p>
-      <h1 id="intro-title">Thoughtful interfaces.<br /><span>Systems built to grow.</span></h1>
-      <p class="cv-role">Senior Software Engineer · Frontend Architecture & Technical Leadership</p>
-      <p class="cv-intro">I build React applications and guide the decisions behind them. My work spans frontend architecture, reusable components, and collaboration across product, design, and backend engineering.</p>
-      <div class="cv-actions">
-        <a class="cv-button cv-primary" href="/work">Explore my experience <span aria-hidden="true">↗</span></a>
-        <a class="cv-button" href="mailto:axelfeji@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a>
-        <a class="cv-text-link" href="/resume">View / print CV</a>
-      </div>
-      <div class="cv-facts" aria-label="Engineering focus">
-        <div><strong>Technical leadership</strong><span>Frontend engineering</span></div>
-        <div><strong>React & TypeScript</strong><span>Frontend architecture</span></div>
-        <div><strong>English & Spanish</strong><span>International collaboration</span></div>
-      </div>
+      <p class="cv-eyebrow">Software engineer · Costa Rica</p>
+      <h1 id="intro-title">Axel Fernández<br />Jiménez<span>.</span></h1>
+      <p class="cv-intro">I build software, mostly with React and TypeScript. These days I lead frontend development: making technical decisions, working with designers, and helping the team put those decisions into practice.</p>
+      <p class="personal-note">I've also worked on backend services and databases with Node.js, Java, .NET, and PostgreSQL. I like understanding what happens on both sides of an API.</p>
+      <div class="cv-actions"><a class="cv-text-link" href="/work">Experience</a><a class="cv-text-link" href="/resume">Read or print my CV</a></div>
     </section>
-    <section class="cv-section" aria-labelledby="focus-title">
-      <div class="cv-section-heading"><p class="cv-eyebrow">What I bring</p><h2 id="focus-title">From component decisions<br />to team direction.</h2></div>
-      <div class="cv-highlight-grid">{highlights.map(item => <div class="cv-highlight"><span class="cv-number">{item.number}</span><h3>{item.title}</h3><p>{item.text}</p></div>)}</div>
+    <section class="cv-section" aria-labelledby="work-title">
+      <h2 id="work-title">A few things I've worked on</h2>
+      <a class="personal-project" href="/projects/shared-ui/"><span class="personal-project-context">Tebra · Software engineering</span><h3>Shared components and a brand migration <span aria-hidden="true">↗</span></h3><p>A component library in Storybook, the Kareo-to-Tebra visual migration, and Java service work.</p></a>
     </section>
-    <section class="cv-section cv-about" aria-labelledby="about-title">
-      <div><p class="cv-eyebrow">Approach & toolkit</p><h2 id="about-title">Frontend depth.<br />Fullstack perspective.</h2></div>
-      <div><p>I work where product, design, and engineering meet: reusable component architecture, frontend state management, API contracts, and delivery planning. I also interview frontend candidates and help establish engineering standards.</p><div class="cv-tags">{expertise.map(skill => <span>{skill}</span>)}</div></div>
+    <section class="cv-section personal-background" aria-labelledby="background-title">
+      <h2 id="background-title">Background</h2>
+      <div><p>I studied Computing Engineering at Tecnológico de Costa Rica, graduating in 2020, and completed a master's in Project Management at Universitat de Barcelona in 2022.</p><p>I work in English and Spanish. Alongside development, I interview frontend candidates and help the team agree on engineering standards.</p></div>
     </section>
-    <section class="cv-section cv-about" aria-labelledby="education-title">
-      <div><p class="cv-eyebrow">Background</p><h2 id="education-title">Engineering & delivery.</h2></div>
-      <div class="cv-education"><div><h3>MSc. Project Management</h3><p>Universitat de Barcelona · 2022</p></div><div><h3>BSc. Computing Engineering</h3><p>Tecnológico de Costa Rica · 2020</p></div></div>
-    </section>
-    <section id="contact" class="cv-contact" aria-labelledby="contact-title">
-      <p class="cv-eyebrow">Get in touch</p><h2 id="contact-title">Let’s build something<br />that works well together.</h2>
-      <div class="cv-actions">{SOCIALS.map(s => <a class="cv-text-link" href={s.HREF}>{s.NAME} <span aria-hidden="true">↗</span></a>)}</div>
+    <section id="contact" class="cv-section personal-contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Say hello</h2>
+      <p>Email is the easiest way to reach me. You can also find my public repositories on GitHub.</p>
+      <div class="cv-actions">{SOCIALS.map(s => <a class="cv-text-link" href={s.HREF}>{s.TEXT}</a>)}</div>
     </section>
   </div>
 </PageLayout>
