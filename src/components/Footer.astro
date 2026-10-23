@@ -1,7 +1,6 @@
 ---
-import { SOCIALS, SITE } from "@consts"
+import { SITE } from "@consts"
 ---
 <footer class="cv-footer">
   <p>© {new Date().getUTCFullYear()} {SITE.AUTHOR}</p>
-  <nav aria-label="Social links">{SOCIALS.map(link => <a href={link.HREF}>{link.NAME}</a>)}</nav>
 </footer>
