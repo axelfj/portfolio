@@ -6,9 +6,9 @@ import {pathToFileURL} from 'node:url'
 import ts from 'typescript'
 
 const dir=mkdtempSync(join(tmpdir(),'portfolio-demo-tests-'))
-for(const name of ['algorithms','boards','evolution','poison','pacman']){
+for(const name of ['algorithms','boards','evolution','poison','pacman','battlefield']){
   const source=readFileSync(new URL(`../src/lib/demos/${name}.ts`,import.meta.url),'utf8')
-  const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText.replace(/from ['"]\.\/evolution['"]/g,"from './evolution.mjs'")
+  const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText.replace(/from ['"]\.\/(evolution|boards)['"]/g,"from './$1.mjs'")
   writeFileSync(join(dir,name+'.mjs'),js)
 }
 const load=name=>import(pathToFileURL(join(dir,name+'.mjs')).href)
@@ -74,4 +74,13 @@ test('Pacman collisions consume lives, power pellets make ghosts edible, walls b
   const blocked=new pac.PacmanGame();blocked.ai=false;blocked.pos=22;blocked.pending=blocked.direction='up';blocked.step();assert.equal(blocked.pos,22)
   const finish=new pac.PacmanGame();finish.ai=false;finish.pellets=new Set([finish.pos-1]);finish.powers.clear();finish.step();assert.equal(finish.state,'won');assert.equal(finish.score,10)
 })
+
+
+const battle=await load('battlefield')
+test('Battlefield playable characters enforce movement, damage, victory and drafting',()=>{
+ const g=new battle.Battlefield();assert.equal(g.army.length,6);assert(!g.select(4));assert(g.select(1));assert.equal(g.act(7,0),null);assert.equal(g.act(4,3).type,'move');assert(!g.select(1));g.endTurn();assert.equal(g.turn,2);
+ g.quickStart();g.army=[{id:0,side:1,kind:'Cavalry',x:3,y:3,hp:25,acted:false},{id:1,side:2,kind:'Spearman',x:3,y:2,hp:10,acted:false}];g.select(0);assert.equal(g.act(3,2).damage,5);assert.equal(g.army[1].hp,5);g.endTurn();g.endTurn();g.select(0);assert(g.act(3,2).defeated);assert.equal(g.winner,1);assert(!g.endTurn());
+ g.startDraft();assert(!g.ready());for(const kind of ['Archer','Cavalry','Spearman'])assert(g.recruit(kind));assert(!g.recruit('Archer'));assert(g.ready());assert(!g.ready());g.recruit('Cavalry');assert(g.ready());assert.equal(g.phase,'battle');assert.equal(g.turn,1)
+})
+
 console.log(`${total} demo checks passed`)
