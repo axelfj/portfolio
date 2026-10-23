@@ -14,7 +14,7 @@ export function jungleMoves(p:Piece,board:Piece[]) {
     if(water(x,y)&&[6,7].includes(p.rank)){let blocked=false;while(water(x,y)){if(board.some(a=>a.x===x&&a.y===y))blocked=true;x+=dx;y+=dy}if(blocked)continue}
     if(x<0||x>6||y<0||y>8||den(x,y)===p.side||water(x,y)&&p.rank!==1)continue
     const q=board.find(a=>a.x===x&&a.y===y);if(q?.side===p.side)continue
-    if(q){if(water(p.x,p.y)!==water(x,y))continue;const pr=trap(p.x,p.y)===3-p.side?0:p.rank,qr=trap(x,y)===3-q.side?0:q.rank
+    if(q){if(water(p.x,p.y)!==water(x,y))continue;const pr=p.rank,qr=trap(x,y)===3-q.side?0:q.rank
       if(qr!==0&&((pr===8&&qr===1)||!(pr>=qr||pr===1&&qr===8)))continue}
     moves.push({x,y})
   }return moves

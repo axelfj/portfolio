@@ -42,7 +42,7 @@ test('Jungle river jumps, water capture boundaries, traps, dens and rat/elephant
   let lion=piece(7,0,4);assert(has(b.jungleMoves(lion,[lion]),3,4));assert(!has(b.jungleMoves(lion,[lion,piece(1,1,4,2,1)]),3,4))
   const elephant=piece(8,0,2),rat=piece(1,0,3,2,1);assert(!has(b.jungleMoves(elephant,[elephant,rat]),0,3));assert(has(b.jungleMoves(rat,[elephant,rat]),0,2))
   const swimmer=piece(1,1,3),land=piece(1,0,3,2,1);assert(!has(b.jungleMoves(swimmer,[swimmer,land]),0,3));const cat=piece(2,2,1),trapped=piece(8,2,0,2,1);assert(has(b.jungleMoves(cat,[cat,trapped]),2,0))
-  const nearDen=piece(4,3,1);assert(!has(b.jungleMoves(nearDen,[nearDen]),3,0));assert(has(b.jungleMoves({...nearDen,side:2},[{...nearDen,side:2}]),3,0));assert.equal(b.jungleInitial().length,16)
+  const nearDen=piece(4,3,1);assert(!has(b.jungleMoves(nearDen,[nearDen]),3,0));assert(has(b.jungleMoves({...nearDen,side:2},[{...nearDen,side:2}]),3,0));assert.equal(b.jungleInitial().length,16);const escaping=piece(7,2,0,2),defender=piece(2,2,1,1,1);assert(has(b.jungleMoves(escaping,[escaping,defender]),2,1), "an animal leaving a trap regains its capture rank")
 })
 test('Battlefield ranges are bounded and units cannot move through occupied squares',()=>{
   const c={id:0,side:1,kind:'Cavalry',x:0,y:0,hp:25,acted:false},block={id:1,side:1,kind:'Archer',x:1,y:0,hp:15,acted:false},enemy={id:2,side:2,kind:'Spearman',x:0,y:1,hp:20,acted:false};const targets=b.battleTargets(c,[c,block,enemy]);assert(!targets.some(t=>!t.attack));assert(targets.some(t=>t.attack&&t.x===0&&t.y===1));assert.deepEqual(b.battleTargets({...c,acted:true},[c]),[])
