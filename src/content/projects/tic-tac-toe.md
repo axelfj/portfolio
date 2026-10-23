@@ -4,18 +4,19 @@ summary: "A Qt/C++ game exploring minimax search and an interface for playing ag
 date: "2019-04-30"
 tags: ["Early work", "C++", "Qt", "Minimax"]
 category: "games"
-demoStatus: "planned"
 sourceAccess: "private"
 repoUrl: "https://github.com/axelfj/tic-tac-toe"
 legacy: true
+demoStatus: "live"
+demoUrl: "https://axelfernandez.vercel.app/demos/tic-tac-toe/"
 ---
-## The original project
-A desktop tic-tac-toe application with computer play and a choice of who starts. Its minimax search evaluates possible continuations of the board.
+## Browser adaptation · 2026
+Play against minimax and reveal the forecast for every empty square. Choose who starts, play a round, and inspect the difference between a forced win, draw, and loss. The browser version validates the nine-cell board and does not redistribute the original desktop build.
 
-## What a browser version could show
-Play a round, inspect candidate moves, and see how the search distinguishes a win, loss, or draw. The adaptation would use a bounded nine-cell board and validate moves before evaluating them.
+[Open the interactive demo](/demos/tic-tac-toe/).
 
-## Team and source
-The original README credits **kevttob** and **azzefj**, Axel's earlier GitHub username. This page presents their collaborative project without claiming exclusive authorship.
+## Credits and scope
+The original README credits kevttob and azzefj, Axel’s earlier GitHub username. This is collaborative project history; the browser implementation is new and the original repository remains private.
 
-[Browse the source](https://github.com/axelfj/tic-tac-toe) (access restricted during a privacy review). The original desktop application needs a board-indexing fix before redistribution; the browser adaptation is not yet available.
+## Historical source
+[Original repository](https://github.com/axelfj/tic-tac-toe). Access remains restricted.

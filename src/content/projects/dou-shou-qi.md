@@ -7,14 +7,16 @@ category: "games"
 legacy: true
 sourceAccess: "private"
 repoUrl: "https://github.com/axelfj/dou-shou-qi"
+demoStatus: "live"
+demoUrl: "https://axelfernandez.vercel.app/demos/dou-shou-qi/"
 ---
-## Legacy project archive
-The game models eight animal ranks, legal board interactions, and exceptions such as the rat capturing the elephant. A browser version would require a new interface and regression checks for the rules.
+## Browser adaptation · 2026
+A new local two-player board implements ranked captures, rats swimming, lion/tiger river jumps, traps, dens, blocked jumps, and repetition draws. Legal destinations are highlighted after selecting an animal. The [rule reference](https://www.ymimports.com/pages/how-to-play-jungle) documents the chosen river and trap variant.
 
-The date shown records the repository's creation, not a new release. The original project is preserved for historical and educational context; compatibility with current runtimes has not been verified.
+[Open the interactive demo](/demos/dou-shou-qi/).
 
-## Collaboration
-The README credits Andrés Brenes and Axel Fernández.
+## Credits and scope
+The original Java project credits Andrés Brenes and Axel Fernández. The browser version uses fresh code and a new interface. Private source, original sprites, and personal metadata are not distributed.
 
-## Source and availability
-[Browse the original repository](https://github.com/axelfj/dou-shou-qi). Source access is restricted pending a privacy review. This catalog page does not execute the original application.
+## Historical source
+[Original repository](https://github.com/axelfj/dou-shou-qi). Access remains restricted.

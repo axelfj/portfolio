@@ -5,23 +5,16 @@ date: "2017-10-24"
 tags: ["Early work", "Python", "Algorithms", "Tkinter"]
 repoUrl: "https://github.com/axelfj/dynamic-algorithms"
 legacy: true
+demoStatus: "live"
+demoUrl: "https://axelfernandez.vercel.app/demos/sorting/"
 ---
-## Engineering foundations · 2017
-A collaborative academic project that brings classic algorithms into a desktop interface. Users choose an algorithm, supply parameters, and inspect the output.
+## Browser adaptation · 2026
+Explore [sorting in motion](/demos/sorting/) with quicksort, heapsort, and a bubble-sort comparison. Step through actual comparisons and swaps. In the [shortest-path lab](/demos/graphs/), edit edge weights and inspect Dijkstra’s frontier, routes, and distances or Floyd–Warshall’s all-pairs matrix. These are new visualizations extending the original Python/Tkinter explorations.
 
-## What the project explores
-- Dynamic programming with coin change, knapsack, and matrix-chain multiplication.
-- Graph traversal and shortest-path problems through Dijkstra and Floyd implementations.
-- Recursion with Towers of Hanoi, and sorting with quicksort and heapsort.
-- A Tkinter interface connecting user inputs to the algorithm modules, with timing helpers for selected operations.
+[Open the interactive demo](/demos/sorting/).
 
-## What it demonstrates
-An early foundation in decomposing problems, expressing algorithms in code, and connecting computational logic to an interactive interface.
-
-## Team
-Created with Andrés Brenes and Iván López. The repository credits all three contributors, including Axel Fernández. Individual file ownership is not asserted here.
+## Credits and scope
+The 2017 project credits Andrés Brenes, Axel Fernández, and Iván López. Original individual file ownership is not asserted. The new browser code separates the visualizations from the historical desktop implementation.
 
 ## Historical source
-[Browse the October 2017 snapshot](https://github.com/axelfj/dynamic-algorithms/tree/934729f8561bd5b76fdcb183615f7a7facb3ad18) or [view the commit history](https://github.com/axelfj/dynamic-algorithms/commits/master/).
-
-This is an academic archive. The original desktop application is linked as source; it has not been republished as a hosted service.
+[Original repository](https://github.com/axelfj/dynamic-algorithms). The archive preserves the earlier project.

@@ -11,7 +11,8 @@
     "preview:network": "astro dev --host",
     "astro": "astro",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test:demos": "node tests/demos.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
