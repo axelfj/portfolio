@@ -5,7 +5,8 @@ date: "2018-11-16"
 tags: ["Early work", "Processing", "Simulation", "Object-oriented design"]
 repoUrl: "https://github.com/axelfj/Simulacion-de-Jerarquia-Alimenticia-en-el-Oceano"
 category: "simulations"
-demoStatus: "planned"
+demoStatus: "live"
+demoUrl: "https://axelfernandez.vercel.app/demos/ocean/"
 legacy: true
 ---
 ## Engineering foundations · 2018
@@ -27,4 +28,6 @@ Created by Andrés Brenes Maleaño, Axel Fernández Jiménez, and Bryand Flores 
 ## Historical source
 [Browse the November 2018 snapshot](https://github.com/axelfj/genetic-aquarium/tree/d83d1fb0b008236c3762d6ca5c39b6323defeb0e) or [view the original repository](https://github.com/AndresBrenesM/Simulacion-de-Jerarquia-Alimenticia-en-el-Oceano).
 
-The original Processing application remains available as source. This page documents the project rather than claiming a newly hosted browser version.
+The original Processing application remains available as source. A new browser adaptation is available separately from the original Processing archive. It uses original geometric artwork, bounded populations, fixed simulation steps, and explicit pause/reset controls. It is an educational interpretation, not a scientifically calibrated model.
+
+[Explore the ocean browser demo](/demos/ocean/).

@@ -5,7 +5,7 @@ date: "2018-05-31"
 tags: ["Java", "Board games", "Object-oriented design"]
 category: "games"
 legacy: true
-sourceAccess: "public"
+sourceAccess: "private"
 repoUrl: "https://github.com/axelfj/dou-shou-qi"
 ---
 ## Legacy project archive
@@ -17,4 +17,4 @@ The date shown records the repository's creation, not a new release. The origina
 The README credits Andrés Brenes and Axel Fernández.
 
 ## Source and availability
-[Browse the original repository](https://github.com/axelfj/dou-shou-qi). This catalog page is a static archive; it does not execute the original application.
+[Browse the original repository](https://github.com/axelfj/dou-shou-qi). Source access is restricted pending a privacy review. This catalog page does not execute the original application.
