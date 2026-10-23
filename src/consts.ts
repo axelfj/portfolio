@@ -1,10 +1,10 @@
 import type { Site, Page, Links, Socials } from "@types"
 export const SITE: Site = {
   TITLE: "Axel Fernández",
-  DESCRIPTION: "Senior Software Engineer in Costa Rica, leading frontend architecture, React design systems, and technical direction for a seven-developer team.",
+  DESCRIPTION: "Senior Software Engineer in Costa Rica, specializing in frontend architecture, reusable components, and technical leadership.",
   AUTHOR: "Axel Fernández Jiménez",
 }
-export const WORK: Page = { TITLE: "Selected experience", DESCRIPTION: "Frontend leadership and fullstack experience at Universal Music Group, Build, Intel, Tebra, Kyndryl, and First Factory." }
+export const WORK: Page = { TITLE: "Selected experience", DESCRIPTION: "Selected experience in frontend leadership and fullstack engineering." }
 export const BLOG: Page = { TITLE: "Writing", DESCRIPTION: "Notes on frontend architecture and engineering." }
 export const PROJECTS: Page = { TITLE: "Selected work", DESCRIPTION: "Engineering highlights in design systems and fullstack applications." }
 export const SEARCH: Page = { TITLE: "Search", DESCRIPTION: "Search engineering highlights." }

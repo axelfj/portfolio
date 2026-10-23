@@ -22,7 +22,7 @@ npm run preview
 - Printable CV: `/resume`, using the same work collection as the experience page. Use Print / save as PDF.
 - Dates use ISO month-start values for reliable parsing; only month and year are displayed, in UTC.
 
-The selected timeline omits Granicus and the earlier internship. Official job titles are retained; frontend leadership responsibilities are described separately. The React design-system library is intended for future reuse by other teams; broader adoption is not claimed.
+The selected timeline omits Granicus and the earlier internship. Official job titles are retained; frontend leadership responsibilities are described separately. Confidential client work is described only in general terms.
 
 ## Deployment
 
