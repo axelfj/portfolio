@@ -162,6 +162,8 @@ html.dark {
   --accent-panel: #151b26;
 }
 
+input[type="checkbox"], input[type="range"] { accent-color: var(--accent-solid); }
+
 /* CV layout */
 .cv-home { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
 .cv-hero { padding: 160px 0 76px; }
@@ -284,4 +286,3 @@ html.dark {
  .personal-home .cv-actions { gap: 20px; }
 }
 
-input[type="checkbox"], input[type="range"] { accent-color: var(--accent-solid); }
