@@ -5,6 +5,7 @@ date: "2019-04-30"
 tags: ["Early work", "C++", "Qt", "Minimax"]
 category: "games"
 demoStatus: "planned"
+sourceAccess: "private"
 repoUrl: "https://github.com/axelfj/tic-tac-toe"
 legacy: true
 ---
@@ -17,4 +18,4 @@ Play a round, inspect candidate moves, and see how the search distinguishes a wi
 ## Team and source
 The original README credits **kevttob** and **azzefj**, Axel's earlier GitHub username. This page presents their collaborative project without claiming exclusive authorship.
 
-[Browse the source](https://github.com/axelfj/tic-tac-toe). The original desktop application needs a board-indexing fix before redistribution; the browser adaptation is not yet available.
+[Browse the source](https://github.com/axelfj/tic-tac-toe) (access restricted during a privacy review). The original desktop application needs a board-indexing fix before redistribution; the browser adaptation is not yet available.
