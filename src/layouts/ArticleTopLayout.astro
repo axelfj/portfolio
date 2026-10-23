@@ -8,9 +8,9 @@ type Props = {
 
 const { entry } = Astro.props
 const { collection, data, body } = entry
-const { title, summary, date } = data
+const { title, summary, date, demoStatus, sourceAccess } = data
 
-const demoUrl = collection === "projects" ? data.demoUrl : null
+const demoUrl = collection === "projects" && (!demoStatus || demoStatus === "live") ? data.demoUrl : null
 const repoUrl = collection === "projects" ? data.repoUrl : null
 ---
 
@@ -38,16 +38,17 @@ const repoUrl = collection === "projects" ? data.repoUrl : null
       {readingTime(body)}
     </div>
   </div>
+  {data.legacy && <p class="mt-6 text-sm font-semibold">Legacy · Project archive</p>}
   <h1 class="text-3xl font-semibold text-black dark:text-white mt-2">
     {title}
   </h1>
   <div class="mt-1">
     {summary}
   </div>
-  {(demoUrl || repoUrl) && 
+  {(demoUrl || repoUrl) &&
   <div class="mt-4 flex flex-wrap gap-2">
-    {demoUrl && 
-      <a href={demoUrl} target="_blank" class="group flex gap-2 items-center px-3 py-1.5 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend">
+    {demoUrl &&
+      <a href={demoUrl} target="_blank" rel="noopener noreferrer" class="group flex gap-2 items-center px-3 py-1.5 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend">
         <svg class="size-4">
           <use href="/ui.svg#globe" class="fill-current group-hover:fill-black group-hover:dark:fill-white blend"/>
         </svg>
@@ -56,16 +57,17 @@ const repoUrl = collection === "projects" ? data.repoUrl : null
         </span>
       </a>
     }
-    {repoUrl && 
-      <a href={repoUrl} target="_blank" class="group flex gap-2 items-center px-3 py-1.5 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend">
+    {repoUrl &&
+      <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="group flex gap-2 items-center px-3 py-1.5 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend">
         <svg class="size-4">
           <use href="/ui.svg#link" class="fill-current group-hover:fill-black group-hover:dark:fill-white blend"/>
         </svg>
         <span class="text-current group-hover:text-black group-hover:dark:text-white blend">
-          See Repository
+          {sourceAccess === "private" ? "GitHub · access restricted" : "View code on GitHub"}
         </span>
       </a>
     }
-  </div> 
+  </div>
   }
+  {demoStatus && demoStatus !== "live" && <p class="mt-4 text-sm">{demoStatus === "prototype" ? "Original prototype. A browser adaptation is planned." : "Original desktop project. A browser adaptation is planned."}</p>}
 </div>
