@@ -26,7 +26,7 @@ The selected timeline omits Granicus and the earlier internship. Official job ti
 
 ## Deployment
 
-The canonical domain remains `https://afernandezdev.vercel.app`, as configured in the existing repository. Confirm the domain in Vercel before changing it. The supplied `afernandez.vercel.app` address returned HTTP 404 during this refresh.
+The canonical domain is `https://axelfernandez.vercel.app`. The previous `afernandezdev.vercel.app` address redirects permanently to it, preserving paths and query strings.
 
 Use `npm run build` and publish `dist/`. Review the pull request and any Vercel preview before merging. No production deployment is performed by the refresh itself.
 
