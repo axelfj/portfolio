@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import { formatWorkDate } from "@lib/work"
+const jobs = await Promise.all((await getCollection("work")).sort((a,b) => b.data.dateStart.getTime() - a.data.dateStart.getTime()).map(async entry => ({ ...entry, ...await entry.render() })))
+---
+<PageLayout title="CV" description="Axel Fernández Jiménez — selected professional experience, skills, and education.">
+  <div class="cv-resume">
+    <div class="cv-actions print-controls"><button id="print-cv" class="cv-button cv-primary">Print / save as PDF</button><a href="/work" class="cv-text-link">Back to experience</a></div>
+    <h1>Axel Fernández Jiménez</h1>
+    <p class="cv-role">Senior Software Engineer · Frontend Architecture & Technical Leadership</p>
+    <p>Costa Rica · <a href="mailto:axelfeji@gmail.com">axelfeji@gmail.com</a> · <a href="https://www.linkedin.com/in/axelafj/">LinkedIn</a> · <a href="https://github.com/axelfj">GitHub</a></p>
+    <h2>Profile</h2><p>Senior Software Engineer with experience in frontend architecture, fullstack systems, and technical leadership. Lead frontend technical direction for a seven-developer team at Universal Music Group as a contractor, owning architectural decisions and pioneering a reusable React design-system implementation.</p>
+    <h2>Selected experience</h2>
+    {jobs.map(entry => <section class="resume-job"><h3>{entry.data.company}</h3><p><strong>{entry.data.role}</strong> · {formatWorkDate(entry.data.dateStart)} – {formatWorkDate(entry.data.dateEnd)}</p><article><entry.Content /></article></section>)}
+    <h2>Education</h2><p>MSc. Project Management · Universitat de Barcelona · 2022<br />BSc. Computing Engineering · Tecnológico de Costa Rica · 2020</p>
+    <h2>Technical skills</h2><p>React, Next.js, TypeScript, Redux, Context API, Zustand, Storybook, design systems, SCSS, MUI, Node.js, .NET, Java, Spring Boot, Hibernate, GraphQL, PostgreSQL, SQL Server, REST APIs, AWS, Azure DevOps, CI/CD, Scrum.</p>
+    <h2>Languages</h2><p>Spanish: native · English: professional full proficiency</p>
+  </div>
+</PageLayout>
+<script>document.getElementById("print-cv")?.addEventListener("click", () => window.print())</script>

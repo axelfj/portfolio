@@ -1,29 +1,12 @@
 ---
 import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
-import TopLayout from "@layouts/TopLayout.astro"
-import BottomLayout from "@layouts/BottomLayout.astro"
-import Projects from "@components/Projects"
-import { PROJECTS } from "@consts"
-
-const projects = (await getCollection("projects"))
-  .filter(project => !project.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-
-const tags = [...new Set(projects.flatMap(project => project.data.tags))]
-  .sort((a, b) => a.localeCompare(b))
+const projects = (await getCollection("projects")).filter(p => !p.data.draft).sort((a,b) => b.data.date.getTime() - a.data.date.getTime())
 ---
-
-<PageLayout title={PROJECTS.TITLE} description={PROJECTS.DESCRIPTION}>
-  <TopLayout>
-    <div class="animate page-heading">
-      {PROJECTS.TITLE}
-    </div>
-  </TopLayout>
-  <BottomLayout>
-    <div class="animate">
-      WORK IN PROGRESS
-      <!-- <Projects client:load tags={tags} data={projects} /> -->
-    </div>
-  </BottomLayout>
+<PageLayout title="Selected work" description="Selected contributions in frontend architecture, enterprise design systems, and internal applications.">
+  <div class="cv-home cv-list-page">
+    <p class="cv-eyebrow">Engineering highlights</p><h1>Selected work.</h1>
+    <p class="cv-intro">A closer look at the problems I work on and the decisions I own.</p>
+    <div class="cv-project-list">{projects.map(project => <a href={"/projects/" + project.slug + "/"} class="cv-project"><h2>{project.data.title} <span aria-hidden="true">↗</span></h2><p>{project.data.summary}</p><div class="cv-tags">{project.data.tags.map(tag => <span>{tag}</span>)}</div></a>)}</div>
+  </div>
 </PageLayout>
