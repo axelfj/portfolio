@@ -1,6 +1,7 @@
+import {mountBattlefield} from './battlefield-view'
 import {mountPacman} from './pacman-view'
 import {sorting,graphEdges,dijkstra,floyd} from '../lib/demos/algorithms'
-import {winner,ticScores,jungleInitial,jungleMoves,animals,water,trap,den,units,battleTargets,type Soldier} from '../lib/demos/boards'
+import {winner,ticScores,jungleInitial,jungleMoves,animals,water,trap,den} from '../lib/demos/boards'
 import {Evolution,ground} from '../lib/demos/evolution'
 import {poisonInitial,poisonLegal,poisonPlay,poisonNext,cardLabel,cardValue,type PoisonState} from '../lib/demos/poison'
 
@@ -95,18 +96,7 @@ if(root.dataset.demo==='dou-shou-qi'){
   }remember();draw()
 }
 
-if(root.dataset.demo==='battlefield'){
-  let army:Soldier[]=[],budget=[0,12,12],turn=1,drafting=true,selected=-1,ended='',id=0
-  const recruitment=document.createElement('div');recruitment.className='demo-controls';controls.append(recruitment);details.innerHTML=table(['Unit','Cost','HP','Attack','Defense','Range','Move'],Object.entries(units).map(([name,u])=>[name,...[u.cost,u.hp,u.attack,u.defense,u.range,u.move].map(String)]))
-  Object.keys(units).forEach(kind=>button(`${kind} (${units[kind].cost})`,()=>{if(!drafting||budget[turn]<units[kind].cost||army.filter(s=>s.side===turn).length>=8)return;const x=army.filter(s=>s.side===turn).length;army.push({id:id++,kind,side:turn,x,y:turn===1?0:7,hp:units[kind].hp,acted:false});budget[turn]-=units[kind].cost;draw()},recruitment))
-  const ready=button('Ready',()=>{if(!drafting||!army.some(p=>p.side===turn))return;if(turn===1)turn=2;else{drafting=false;turn=1}draw()})
-  const end=button('End turn',()=>{if(drafting||ended)return;turn=3-turn;army.forEach(p=>p.acted=false);selected=-1;draw()})
-  button('Reset armies',()=>{army=[];budget=[0,12,12];turn=1;drafting=true;selected=-1;ended='';id=0;draw()})
-  function choose(x:number,y:number){if(drafting||ended)return;const p=army.find(a=>a.id===selected),at=army.find(a=>a.x===x&&a.y===y);if(at?.side===turn&&!at.acted){selected=at.id;draw();return}if(!p)return;const move=battleTargets(p,army).find(m=>m.x===x&&m.y===y);if(!move)return
-    if(move.attack&&at){at.hp-=Math.max(1,units[p.kind].attack-units[at.kind].defense);if(at.hp<=0)army=army.filter(a=>a.id!==at.id)}else{p.x=x;p.y=y}p.acted=true;selected=-1;if(!army.some(a=>a.side===3-turn))ended=`Player ${turn} wins.`;draw()}
-  function draw(){board.innerHTML='';const grid=document.createElement('div');grid.className='board-grid';grid.style.gridTemplateColumns='repeat(8,1fr)';board.append(grid);const p=army.find(a=>a.id===selected),moves=p?battleTargets(p,army):[];for(let y=0;y<8;y++)for(let x=0;x<8;x++){const at=army.find(a=>a.x===x&&a.y===y),m=moves.find(a=>a.x===x&&a.y===y);const c=cell(grid,at?units[at.kind].symbol:'',`Row ${y+1}, column ${x+1}: ${at?`Player ${at.side} ${at.kind}, ${at.hp} HP${at.acted?', acted':''}`:'empty'}${m?', legal '+(m.attack?'attack':'move'):''}`,()=>choose(x,y),`${at?'side'+at.side:''} ${at?.id===selected?'selected':''} ${m?m.attack?'attack':'legal':''}`);if(at){const s=document.createElement('small');s.textContent=at.hp+' HP'+(at.acted?' ✓':'');c.append(s)}c.disabled=drafting||!!ended}recruitment.hidden=!drafting;ready.hidden=!drafting;end.disabled=drafting||!!ended;status.textContent=ended||(drafting?`Player ${turn}: recruit an army · ${budget[turn]} budget remaining. Press Ready when finished.`:`Player ${turn} to act. ${p?p.kind+' selected.':'Select a unit or end your turn.'}`)
-  }draw()
-}
+if(root.dataset.demo==='battlefield'){disposers.push(mountBattlefield(board,controls,details,status))}
 
 if(root.dataset.demo==='poison'){
   let state=poisonInitial(),past:PoisonState[]=[],future:PoisonState[]=[],selected=-1

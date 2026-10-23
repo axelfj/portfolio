@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- Original vector characters. currentColor supplies each army's uniform. -->
+  <symbol id="archer" viewBox="0 0 72 72">
+    <ellipse cx="35" cy="65" rx="22" ry="4" fill="#090e16" opacity=".4"/>
+    <g stroke="#202735" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M24 25 17 53 39 53 40 27" fill="currentColor"/>
+      <path d="m19 23-5 23 5 2 6-23" fill="#725542"/>
+      <path d="m17 28-2-17m6 18 1-18m-3 17 1-20" stroke="#d5bb86"/>
+      <path d="m15 12-2-4m9 4 2-4m-4 1 1-4" stroke="#dae0eb"/>
+      <path d="m26 43-2 17 7 1 3-17m1-1 4 17 7-1-5-18" fill="#465166"/>
+      <path d="m24 58-2 6h11v-6m6 0v6h11l-4-6" fill="#493b36"/>
+      <path d="m24 25-2 18q12 7 22-1l-4-17" fill="#a4aebb"/>
+      <path d="m25 29 7 11 7-12" fill="none" stroke="#dae0e8"/>
+      <path d="m22 41 22-1 1 5-23 1" fill="#71503c"/>
+      <path d="m32 41 5 0v5h-5z" fill="#e4be74"/>
+      <path d="m40 27 8 7 7-2" fill="none" stroke="currentColor" stroke-width="7"/>
+      <path d="m25 29 7 7 12-2" fill="none" stroke="#c99c7d" stroke-width="5"/>
+      <circle cx="54" cy="32" r="3" fill="#dfb193"/>
+      <path d="M51 12Q69 34 51 56" fill="none" stroke="#b78251" stroke-width="3"/>
+      <path d="m51 12-5 22 5 22" fill="none" stroke="#e5d3b2" stroke-width="1"/>
+      <path d="m39 33 25-2-5-2m5 2-5 3" fill="none" stroke="#e8d9b5"/>
+      <circle cx="33" cy="17" r="8" fill="#dfb193"/>
+      <path d="M24 16q0-13 10-13 10 1 9 14l-7-2-12 3z" fill="#c5ceda"/>
+      <path d="M25 12q9-4 17 1" fill="none" stroke="#eaf0f7"/>
+      <path d="m25 17 1 8 5-4" fill="#8694a7"/>
+      <path d="m36 18 2 0" stroke="#262936"/>
+    </g>
+  </symbol>
+  <symbol id="spearman" viewBox="0 0 72 72">
+    <ellipse cx="35" cy="65" rx="22" ry="4" fill="#090e16" opacity=".4"/>
+    <g stroke="#202735" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+      <path d="m24 24-8 30 29-1-5-28" fill="currentColor"/>
+      <path d="m26 43-3 18h8l3-17m1 0 3 17h8l-4-19" fill="#515b6e"/>
+      <path d="m23 59-3 6h12v-6m6 0v6h12l-4-6" fill="#493b36"/>
+      <path d="m25 25-3 20 22-1-5-19" fill="#b0b9c6"/>
+      <path d="m29 27 5 13 5-13m-15 9 19-1" fill="none" stroke="#dce3ed"/>
+      <path d="m23 42 21-1v5l-21 1" fill="#76523d"/>
+      <path d="m30 42 6 0v5h-6z" fill="#d5ac61"/>
+      <path d="m40 28 8 10 7-3" fill="none" stroke="currentColor" stroke-width="7"/>
+      <path d="M56 12v48" stroke="#b28d5e" stroke-width="3"/>
+      <path d="m56 1-5 13 5-2 5 2z" fill="#dce5f0"/>
+      <circle cx="55" cy="36" r="3" fill="#deb091"/>
+      <path d="m25 28-5 9" stroke="#c99c7d" stroke-width="6"/>
+      <path d="M10 31q10-7 21 0v15q-8 12-11 14-6-4-10-14z" fill="currentColor"/>
+      <path d="M13 33q7-5 15 0v12q-5 9-8 11-4-4-7-11z" fill="none" stroke="#e3c28b" stroke-width="2"/>
+      <circle cx="20" cy="41" r="4" fill="#bdc6d1"/>
+      <circle cx="33" cy="16" r="8" fill="#dfb193"/>
+      <path d="M24 16q0-12 9-12 10 1 10 12l-8-2-11 4z" fill="#c5ceda"/>
+      <path d="m24 17 1 8 6-4m10-5-1 8-4-4" fill="#8d9bb0"/>
+      <path d="m30 4q2-7 8-2l-2 6" fill="currentColor"/>
+      <path d="m33 17h3" stroke="#262936"/>
+    </g>
+  </symbol>
+  <symbol id="cavalry" viewBox="0 0 72 72">
+    <ellipse cx="36" cy="66" rx="29" ry="4" fill="#090e16" opacity=".4"/>
+    <g stroke="#202735" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M15 39Q4 31 7 52l5-6" fill="#42352f"/>
+      <path d="m18 46-4 16 5 1 8-17m6 0 2 17h5l1-17m7-1 5 17 5-1-4-23" fill="#a67754"/>
+      <path d="m13 61-2 5h9v-4m15 0v4h8l-3-4m12-1v5h9l-3-5" fill="#443632"/>
+      <path d="M12 39q5-9 22-6l11 3 3-20 9 3 4 16-9 14q-18 8-36 1z" fill="#b88b63"/>
+      <path d="m47 19-4 17 4 4 5-24" fill="#463a35"/>
+      <path d="m49 17 3-10 4 9 5 2 6 11-3 7-12-4" fill="#c49a73"/>
+      <path d="m56 17 7 13 3-1m-12-3 11 3" fill="none" stroke="#655048"/>
+      <circle cx="58" cy="21" r="1.5" fill="#17202f"/>
+      <path d="m23 34-3 15q12 6 22 0l-4-15" fill="currentColor"/>
+      <path d="m23 36 15 0" stroke="#e0c18a"/>
+      <path d="m25 26-7 13 15-1 3-14" fill="currentColor"/>
+      <path d="m26 20-4 14 15 1-1-14" fill="#a8b4c5"/>
+      <path d="m27 34 9 3-2 14h-5l-2-11" fill="#4d596c"/>
+      <path d="m29 48-1 5 9-1-3-4" fill="#493b36"/>
+      <path d="m34 22 9 7 11-2" fill="none" stroke="currentColor" stroke-width="6"/>
+      <path d="m46 28 15-25" stroke="#bf9b6d" stroke-width="2.5"/>
+      <path d="m63 1-5 5 4 2z" fill="#e0e8f2"/>
+      <path d="m58 9-12 0 8 8" fill="currentColor"/>
+      <circle cx="30" cy="13" r="7" fill="#dfb193"/>
+      <path d="M22 13q0-11 8-11 9 0 9 12l-8-2-9 3z" fill="#c8d1df"/>
+      <path d="m24 5q-2-6 6-5l2 5" fill="currentColor"/>
+      <path d="m33 14 2 0" stroke="#252b37"/>
+    </g>
+  </symbol>
+</svg>
