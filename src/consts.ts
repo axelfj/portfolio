@@ -6,12 +6,12 @@ export const SITE: Site = {
 }
 export const WORK: Page = { TITLE: "Selected experience", DESCRIPTION: "Selected experience in frontend leadership and fullstack engineering." }
 export const BLOG: Page = { TITLE: "Writing", DESCRIPTION: "Notes on frontend architecture and engineering." }
-export const PROJECTS: Page = { TITLE: "Selected work", DESCRIPTION: "Engineering highlights in design systems and fullstack applications." }
+export const PROJECTS: Page = { TITLE: "Projects", DESCRIPTION: "Games, simulations, and engineering projects with original source code and team credits." }
 export const SEARCH: Page = { TITLE: "Search", DESCRIPTION: "Search engineering highlights." }
 export const LINKS: Links = [
   { TEXT: "Home", HREF: "/" },
   { TEXT: "Experience", HREF: "/work" },
-  { TEXT: "Selected work", HREF: "/projects" },
+  { TEXT: "Projects", HREF: "/projects" },
 ]
 export const SOCIALS: Socials = [
   { NAME: "Email", ICON: "email", TEXT: "axelfeji@gmail.com", HREF: "mailto:axelfeji@gmail.com" },
