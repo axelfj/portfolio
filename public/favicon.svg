@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
   <title id="title">Axel Fernández</title>
-  <rect width="64" height="64" rx="14" fill="#0f766e"/>
+  <rect width="64" height="64" rx="14" fill="#355c9a"/>
   <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter">
     <path d="M10 46 20 18 30 46 M14 36h12"/>
     <path d="M39 46V19h16 M39 31h13"/>

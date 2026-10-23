@@ -1,4 +1,5 @@
-import {sorting,graphEdges,dijkstra,floyd,astar,defaultMaze} from '../lib/demos/algorithms'
+import {mountPacman} from './pacman-view'
+import {sorting,graphEdges,dijkstra,floyd} from '../lib/demos/algorithms'
 import {winner,ticScores,jungleInitial,jungleMoves,animals,water,trap,den,units,battleTargets,type Soldier} from '../lib/demos/boards'
 import {Evolution,ground} from '../lib/demos/evolution'
 import {poisonInitial,poisonLegal,poisonPlay,poisonNext,cardLabel,cardValue,type PoisonState} from '../lib/demos/poison'
@@ -11,7 +12,7 @@ function button(label:string,fn:()=>void,parent=controls){const b=document.creat
 function select(label:string,options:[string,string][],fn:()=>void,parent=controls){const l=document.createElement('label');l.textContent=label+' ';const s=document.createElement('select');s.setAttribute('aria-label',label);options.forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;s.append(o)});s.addEventListener('change',fn);l.append(s);parent.append(l);return s}
 function check(label:string,fn:()=>void,parent=controls){const l=document.createElement('label'),c=document.createElement('input');c.type='checkbox';c.addEventListener('change',fn);l.append(c,document.createTextNode(label));parent.append(l);return c}
 function range(label:string,min:number,max:number,value:number,step:number,fn:()=>void){const l=document.createElement('label');l.textContent=label+' ';const r=document.createElement('input');r.type='range';r.min=String(min);r.max=String(max);r.step=String(step);r.value=String(value);l.append(r);controls.append(l);r.addEventListener('input',fn);return r}
-function background(){if(!ctx||!canvas)return;ctx.fillStyle='#102630';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.font='16px Atkinson, sans-serif';ctx.textAlign='left'}
+function background(){if(!ctx||!canvas)return;ctx.fillStyle='#14171d';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.font='16px Atkinson, sans-serif';ctx.textAlign='left'}
 function table(headers:string[],rows:string[][]){return '<table class="lab-table"><thead><tr>'+headers.map(x=>'<th scope="col">'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('')+'</tbody></table>'}
 function cell(parent:HTMLElement,text:string,label:string,fn:()=>void,cls=''){const b=button(text,fn,parent);b.className='board-cell '+cls;b.setAttribute('aria-label',label);return b}
 // A single bounded timer per demo. Nothing runs until the visitor presses Play.
@@ -24,7 +25,7 @@ if(root.dataset.demo==='sorting'){
   const t=transport(()=>{if(index>=frames.length-1)return false;index++;draw();return index<frames.length-1},()=>{index=0;draw()})
   button('Back',()=>{t.pause();index=Math.max(0,index-1);draw()})
   function reset(){t.pause();frames=sorting(data,kind.value);index=0;draw()}
-  function draw(){if(!ctx)return;background();const f=frames[index],w=780/f.values.length;f.values.forEach((v,i)=>{ctx.fillStyle=f.active.includes(i)?'#6ce1bf':'#87a8b8';const h=v*3.2;ctx.fillRect(60+i*w,390-h,w-8,h);ctx.fillStyle='#eef6f4';ctx.textAlign='center';ctx.fillText(String(v),60+i*w+(w-8)/2,415)});status.textContent=`${kind.options[kind.selectedIndex].text} · Step ${index+1}/${frames.length} · ${f.note} · ${f.comparisons} comparisons · ${f.swaps} swaps`;details.textContent='Current order: '+f.values.join(', ')}draw()
+  function draw(){if(!ctx)return;background();const f=frames[index],w=780/f.values.length;f.values.forEach((v,i)=>{ctx.fillStyle=f.active.includes(i)?'#9ab7e8':'#8894a6';const h=v*3.2;ctx.fillRect(60+i*w,390-h,w-8,h);ctx.fillStyle='#edf0f5';ctx.textAlign='center';ctx.fillText(String(v),60+i*w+(w-8)/2,415)});status.textContent=`${kind.options[kind.selectedIndex].text} · Step ${index+1}/${frames.length} · ${f.note} · ${f.comparisons} comparisons · ${f.swaps} swaps`;details.textContent='Current order: '+f.values.join(', ')}draw()
 }
 
 if(root.dataset.demo==='graphs'){
@@ -37,32 +38,14 @@ if(root.dataset.demo==='graphs'){
   function reset(){t.pause();df=dijkstra(edges,Number(source.value));ff=floyd(edges);index=0;draw()}
   function draw(){if(!ctx)return;background();const pts=[[90,220],[300,80],[300,340],[550,100],[550,340],[800,220]],d=df[Math.min(index,df.length-1)],f=ff[Math.min(index,ff.length-1)],path:number[]=[];source.disabled=mode.value==='floyd';target.disabled=mode.value==='floyd'
     if(mode.value==='dijkstra'&&Number.isFinite(d.dist[Number(target.value)])){let u=Number(target.value);while(u!==-1){path.unshift(u);u=d.prev[u]}}
-    for(const e of edges){const a=pts[e.a],b=pts[e.b],onPath=path.some((p,i)=>i>0&&(path[i-1]===e.a&&p===e.b||path[i-1]===e.b&&p===e.a));ctx.strokeStyle=onPath?'#f6d66f':mode.value==='dijkstra'&&d.edge===e?'#6ce1bf':'#587581';ctx.lineWidth=onPath?5:2;ctx.beginPath();ctx.moveTo(...a as [number,number]);ctx.lineTo(...b as [number,number]);ctx.stroke();const x=(a[0]+b[0])/2,y=(a[1]+b[1])/2;ctx.fillStyle='#102630';ctx.fillRect(x-14,y-15,28,26);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText(String(e.w),x,y+4)}
-    pts.forEach(([x,y],i)=>{ctx.fillStyle=(mode.value==='dijkstra'?d.visited.includes(i):f.k===i)?'#6ce1bf':'#dce8e8';ctx.beginPath();ctx.arc(x,y,26,0,Math.PI*2);ctx.fill();ctx.fillStyle='#102630';ctx.textAlign='center';ctx.fillText(String.fromCharCode(65+i),x,y+5);if(mode.value==='dijkstra'){ctx.fillStyle='#dce8e8';ctx.fillText(Number.isFinite(d.dist[i])?String(d.dist[i]):'∞',x,y+53)}})
+    for(const e of edges){const a=pts[e.a],b=pts[e.b],onPath=path.some((p,i)=>i>0&&(path[i-1]===e.a&&p===e.b||path[i-1]===e.b&&p===e.a));ctx.strokeStyle=onPath?'#f6d66f':mode.value==='dijkstra'&&d.edge===e?'#9ab7e8':'#6d788a';ctx.lineWidth=onPath?5:2;ctx.beginPath();ctx.moveTo(...a as [number,number]);ctx.lineTo(...b as [number,number]);ctx.stroke();const x=(a[0]+b[0])/2,y=(a[1]+b[1])/2;ctx.fillStyle='#14171d';ctx.fillRect(x-14,y-15,28,26);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText(String(e.w),x,y+4)}
+    pts.forEach(([x,y],i)=>{ctx.fillStyle=(mode.value==='dijkstra'?d.visited.includes(i):f.k===i)?'#9ab7e8':'#e3e7ee';ctx.beginPath();ctx.arc(x,y,26,0,Math.PI*2);ctx.fill();ctx.fillStyle='#14171d';ctx.textAlign='center';ctx.fillText(String.fromCharCode(65+i),x,y+5);if(mode.value==='dijkstra'){ctx.fillStyle='#e3e7ee';ctx.fillText(Number.isFinite(d.dist[i])?String(d.dist[i]):'∞',x,y+53)}})
     status.textContent=`Step ${index+1}/${length()} · ${mode.value==='dijkstra'?d.note:f.note}`
     result.innerHTML=mode.value==='dijkstra'?table(['Node','Distance','Previous'],d.dist.map((v,i)=>[String.fromCharCode(65+i),Number.isFinite(v)?String(v):'∞',d.prev[i]<0?'—':String.fromCharCode(65+d.prev[i])]))+`<p>Current route: ${path.map(i=>String.fromCharCode(65+i)).join(' → ')||'Not reached'}. Yellow edges show the current route; its distance is final when the target is settled.</p>`:table(['From / To','A','B','C','D','E','F'],f.matrix.map((row,i)=>[String.fromCharCode(65+i),...row.map((v,j)=>`<span class="${i===f.i&&j===f.j?'changed':''}">${Number.isFinite(v)?v:'∞'}</span>`)]))
   }draw()
 }
 
-if(root.dataset.demo==='pacman'){
-  let walls=defaultMaze(),start=18,goal=270,index=-1,frames=astar(walls,start,goal),agent=0
-  const edit=select('Edit',[['wall','Walls'],['start','Start'],['goal','Pellet']],()=>{})
-  const t=transport(()=>{if(index<frames.length-1){index++;draw();return true}const path=frames.at(-1)?.path||[];if(agent<path.length-1){agent++;draw();return agent<path.length-1}return false},()=>reset())
-  t.play.textContent='Play';button('Clear walls',()=>{walls=walls.map(()=>false);reset()});button('Example maze',()=>{walls=defaultMaze();start=18;goal=270;reset()})
-  const access=check('Keyboard-friendly grid',()=>{grid.hidden=!access.checked});const grid=document.createElement('div');grid.className='maze-access';grid.hidden=true;details.append(grid)
-  const legend=document.createElement('p');legend.textContent='Yellow: route · Teal: frontier · Slate: visited. You can also edit with the labeled keyboard grid.';details.prepend(legend)
-  function change(i:number){if(edit.value==='start'){if(!walls[i])start=i}else if(edit.value==='goal'){if(!walls[i])goal=i}else if(i!==start&&i!==goal)walls[i]=!walls[i];reset()}
-  canvas!.addEventListener('click',e=>{const r=canvas!.getBoundingClientRect(),x=Math.floor(((e.clientX-r.left)/r.width*900-230)/24),y=Math.floor(((e.clientY-r.top)/r.height*450-20)/24);if(x>=0&&x<17&&y>=0&&y<17)change(y*17+x)})
-  for(let i=0;i<289;i++){const b=button('',()=>change(i),grid);b.setAttribute('aria-label',`Row ${Math.floor(i/17)+1}, column ${i%17+1}`)}
-  function reset(){t.pause();index=-1;agent=0;frames=astar(walls,start,goal);draw()}
-  function draw(){if(!ctx)return;background();const f=frames[index],path=f?.path||[],offsetX=230,s=24
-    walls.forEach((wall,i)=>{const x=offsetX+i%17*s,y=20+Math.floor(i/17)*s;ctx.fillStyle=wall?'#365967':path.includes(i)?'#766a37':f?.closed.includes(i)?'#36414b':f?.open.includes(i)?'#287b73':'#172f3a';ctx.fillRect(x,y,s-2,s-2)})
-    const dot=(i:number,color:string,r:number)=>{ctx.fillStyle=color;ctx.beginPath();ctx.arc(offsetX+i%17*s+11,20+Math.floor(i/17)*s+11,r,0,Math.PI*2);ctx.fill()};dot(goal,'#fff',4);const pos=path.length?path[agent]:start;dot(pos,'#ffe174',9)
-    ctx.fillStyle='#e1efee';ctx.textAlign='left';ctx.fillText('A* search',30,75);ctx.fillText(`Visited: ${f?.closed.length||0}`,30,108);ctx.fillText(`Frontier: ${f?.open.length||0}`,30,141)
-    const done=index===frames.length-1;status.textContent=index<0?'Ready. Edit the maze or press Play.':path.length?`Route found: ${path.length-1} moves · Agent ${agent}/${path.length-1} · ${f.closed.length} visited cells`:done?'No route found. Open a wall and try again.':`Exploring cell ${f.current} · ${f.closed.length} visited · ${f.open.length} frontier cells`
-    Array.from(grid.children).forEach((el,i)=>{const b=el as HTMLButtonElement;b.className=walls[i]?'wall':'';b.textContent=i===start?'S':i===goal?'●':walls[i]?'■':'';b.setAttribute('aria-label',`Row ${Math.floor(i/17)+1}, column ${i%17+1}: ${i===start?'start':i===goal?'pellet':walls[i]?'wall':'open'}`)})
-  }draw()
-}
+if(root.dataset.demo==='pacman'&&canvas){disposers.push(mountPacman(canvas,controls,details,status))}
 
 if(root.dataset.demo==='evolving-car'){
   let seed=42,world=new Evolution(seed),playing=false,animation=0,last=0,accumulated=0,lastReport=-1
@@ -77,9 +60,9 @@ if(root.dataset.demo==='evolving-car'){
   function tick(now:number){if(!playing)return;accumulated+=Math.min((now-(last||now))/1000,.1)*Number(pace.value);last=now;while(accumulated>=1/60){world.step(1/60);accumulated-=1/60}draw();if(world.generation>80){pause();return}animation=requestAnimationFrame(tick)}
   const stop=()=>{pause();lastReport=-1;draw()};document.addEventListener('visibilitychange',stop);disposers.push(()=>{pause();document.removeEventListener('visibilitychange',stop)})
   function draw(){if(!ctx)return;background();const leader=[...world.cars].sort((a,b)=>b.x-a.x)[0],camera=Math.max(0,leader.x-220)
-    ctx.fillStyle='#304e49';ctx.beginPath();ctx.moveTo(0,390);for(let x=0;x<=900;x+=4)ctx.lineTo(x,ground(x+camera));ctx.lineTo(900,390);ctx.closePath();ctx.fill();ctx.strokeStyle='#8bcbb2';ctx.lineWidth=2;ctx.stroke()
+    ctx.fillStyle='#343b45';ctx.beginPath();ctx.moveTo(0,390);for(let x=0;x<=900;x+=4)ctx.lineTo(x,ground(x+camera));ctx.lineTo(900,390);ctx.closePath();ctx.fill();ctx.strokeStyle='#99a8bf';ctx.lineWidth=2;ctx.stroke()
     world.cars.forEach(c=>{const x=c.x-camera,d=c.dna,y=ground(c.x)-d.wheel;ctx.save();ctx.translate(x,y);ctx.rotate(Math.atan((ground(c.x+2)-ground(c.x-2))/4));ctx.globalAlpha=c===leader?1:.32;ctx.strokeStyle=c===leader?'#ffda71':'#88c8df';ctx.fillStyle=ctx.strokeStyle;ctx.fillRect(-d.body/2,-d.wheel*.9,d.body,13);for(const wx of [-d.body*.35,d.body*.35]){ctx.beginPath();ctx.arc(wx,0,d.wheel,0,Math.PI*2);ctx.stroke()}ctx.restore()})
-    ctx.fillStyle='#eef6ef';ctx.fillText(`Generation ${world.generation}`,24,32);ctx.fillText(`Seed ${seed} · Mutation ${Math.round(world.mutation*100)}%`,24,58);ctx.fillText(`Best distance ${Math.round(world.best-20)} / 3980`,24,84)
+    ctx.fillStyle='#edf0f5';ctx.fillText(`Generation ${world.generation}`,24,32);ctx.fillText(`Seed ${seed} · Mutation ${Math.round(world.mutation*100)}%`,24,58);ctx.fillText(`Best distance ${Math.round(world.best-20)} / 3980`,24,84)
     const h=world.history;ctx.strokeStyle='#ffda71';ctx.beginPath();h.forEach((v,i)=>{const x=470+i*400/80,y=130-(v-20)/3980*95;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.fillText('Best fitness per generation',470,155)
     const report=world.generation*100+Math.floor(world.time*2);if(lastReport===report)return;lastReport=report
     status.textContent=`Generation ${world.generation} · ${world.time.toFixed(1)} / 22 seconds · ${world.cars.filter(c=>c.alive).length} active cars · Best ever ${Math.round(world.best-20)} · ${playing?"Running":"Paused"}`

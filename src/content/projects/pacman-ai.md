@@ -14,9 +14,11 @@ demoUrl: "https://axelfernandez.vercel.app/demos/pacman/"
 A desktop exploration of pathfinding in a Pacman-style world. The project combines a generated grid, obstacles, collectible items, and an A* search implementation.
 
 ## Browser adaptation · 2026
-A new A* maze playground lets visitors place walls, move the start and pellet, inspect the frontier, and follow the resulting route. Four-neighbor movement and Manhattan distance keep the search easy to inspect. This is a pathfinding adaptation, not a full arcade-game port.
+A playable Pacman-style maze with blue walls, animated characters, pellets, four chasing ghosts, power pellets, score, and three lives. Watch the AI play or switch to manual controls with arrow keys, WASD, and on-screen direction buttons.
 
-[Open the interactive demo](/demos/pacman/).
+The AI uses A* with a Manhattan heuristic and extra costs around active ghosts. An optional route overlay shows its current plan. Ghosts follow corridors, chase different targets, and flee when a power pellet is active. This is a new single-maze interpretation, not an exact port of the commercial arcade rules.
+
+[Play the browser demo](/demos/pacman/).
 
 ## Credits and scope
 The archive is a fork of JuanEscobar066/Pacman-IA. The original team contributions remain shared; individual implementation ownership is not asserted. Private source, sprites, voice services, and the Python environment are not distributed.

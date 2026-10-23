@@ -6,13 +6,13 @@ import {pathToFileURL} from 'node:url'
 import ts from 'typescript'
 
 const dir=mkdtempSync(join(tmpdir(),'portfolio-demo-tests-'))
-for(const name of ['algorithms','boards','evolution','poison']){
+for(const name of ['algorithms','boards','evolution','poison','pacman']){
   const source=readFileSync(new URL(`../src/lib/demos/${name}.ts`,import.meta.url),'utf8')
   const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText.replace(/from ['"]\.\/evolution['"]/g,"from './evolution.mjs'")
   writeFileSync(join(dir,name+'.mjs'),js)
 }
 const load=name=>import(pathToFileURL(join(dir,name+'.mjs')).href)
-const a=await load('algorithms'),b=await load('boards'),e=await load('evolution'),p=await load('poison')
+const a=await load('algorithms'),b=await load('boards'),e=await load('evolution'),p=await load('poison'),pac=await load('pacman')
 let total=0
 function test(name,fn){fn();total++;console.log('PASS '+name)}
 test('Sort traces preserve inputs and finish correctly for empty, sorted, reverse and duplicate values',()=>{
@@ -59,5 +59,19 @@ test('Poison validates suits, exact 13, overflow capture, last-heart exception',
 })
 test('Poison completes seeded games for 2–6 players while conserving the deck every move',()=>{
   for(let n=2;n<=6;n++)for(let seed=1;seed<=8;seed++){const s=p.poisonInitial(n,seed);let turns=0;while(!s.finished&&turns++<1200){if(s.roundOver){p.poisonNext(s,seed);continue}const moves=s.hands[s.turn].flatMap(c=>[0,1,2].filter(i=>p.poisonLegal(s,c,i)).map(i=>[c.id,i]));assert(moves.length,`no move at ${n} players, seed ${seed}`);const move=moves[(turns*7)%moves.length];p.poisonPlay(s,...move);const cards=[...s.deck,...s.hands.flat(),...s.piles.flat(),...s.won.flat()];assert.equal(cards.length,52);assert.equal(new Set(cards.map(c=>c.id)).size,52)}assert(s.finished,`game did not terminate: ${n}, ${seed}`)}
+})
+test('Pacman maze is connected, food is reachable, AI paths and actors stay in corridors',()=>{
+  const g=new pac.PacmanGame(),seen=new Set([g.pos]),queue=[g.pos]
+  for(let i=0;i<queue.length;i++)for(const q of pac.neighbors(queue[i]))if(!seen.has(q)){seen.add(q);queue.push(q)}
+  assert(pac.MAZE.every(r=>r.length===pac.WIDTH));for(const p of g.pellets)assert(seen.has(p));for(const ghost of g.ghosts)assert(seen.has(ghost.pos))
+  const original=g.pellets.size;let ticks=0
+  while(g.state==='playing'&&ticks++<2000){g.step();assert(pac.walkable(g.pos));g.ghosts.forEach(ghost=>assert(pac.walkable(ghost.pos)));g.route.forEach((p,i)=>{assert(pac.walkable(p));if(i)assert.equal(pac.distance(p,g.route[i-1]),1)});assert(g.lives>=0&&g.lives<=3);assert(g.power>=0)}
+  assert(g.pellets.size<original-20,'AI must collect pellets, not just animate');assert(g.score>=200);console.log(`  AI run: ${g.score} score, ${g.pellets.size} pellets remaining, ${g.state}`)
+})
+test('Pacman collisions consume lives, power pellets make ghosts edible, walls block movement, and food can be cleared',()=>{
+  const danger=new pac.PacmanGame();danger.ai=false;danger.ghosts[0].pos=danger.pos-1;danger.ghosts[0].wait=0;danger.step();assert.equal(danger.lives,2)
+  const powered=new pac.PacmanGame();powered.ai=false;powered.power=10;powered.ghosts[0].pos=powered.pos-1;powered.ghosts[0].wait=0;powered.step();assert.equal(powered.lives,3);assert(powered.score>=200);assert(powered.ghosts[0].wait>0)
+  const blocked=new pac.PacmanGame();blocked.ai=false;blocked.pos=22;blocked.pending=blocked.direction='up';blocked.step();assert.equal(blocked.pos,22)
+  const finish=new pac.PacmanGame();finish.ai=false;finish.pellets=new Set([finish.pos-1]);finish.powers.clear();finish.step();assert.equal(finish.state,'won');assert.equal(finish.score,10)
 })
 console.log(`${total} demo checks passed`)
