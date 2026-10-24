@@ -36,7 +36,7 @@ const repoUrl = collection === "projects" ? data.repoUrl : null
       <svg class="size-5 stroke-current">
         <use href="/ui.svg#book-open"/>
       </svg>
-      {readingTime(body)}
+      {readingTime(body ?? "")}
     </div>
   </div>
   {data.legacy && <p class="mt-6 text-sm font-semibold">Legacy · Project archive</p>}

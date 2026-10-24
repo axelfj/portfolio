@@ -1,7 +1,9 @@
-import { defineCollection, z } from "astro:content"
+import { defineCollection } from "astro:content"
+import { z } from "astro/zod"
+import { glob } from "astro/loaders"
 
 const work = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/work" }),
   schema: z.object({
     company: z.string(),
     role: z.string(),
@@ -12,7 +14,7 @@ const work = defineCollection({
 
 
 const projects = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),

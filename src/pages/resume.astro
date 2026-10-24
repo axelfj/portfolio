@@ -1,8 +1,9 @@
 ---
+import { render } from "astro:content"
 import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
 import { formatWorkDate } from "@lib/work"
-const jobs = await Promise.all((await getCollection("work")).sort((a,b) => b.data.dateStart.getTime() - a.data.dateStart.getTime()).map(async entry => ({ ...entry, ...await entry.render() })))
+const jobs = await Promise.all((await getCollection("work")).sort((a,b) => b.data.dateStart.getTime() - a.data.dateStart.getTime()).map(async entry => ({ ...entry, ...await render(entry) })))
 ---
 <PageLayout title="CV" description="Axel Fernández Jiménez — selected professional experience, skills, and education.">
   <div class="cv-resume">
