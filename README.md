@@ -1,79 +1,45 @@
-![Astro Sphere Lighthouse Score](_astrosphere.jpg)
+# Axel Fernández — Portfolio
 
-Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on my personal website.
-It is primarily Astro, Tailwind and Typescript, with a very small amount of SolidJS for stateful components.
+Personal digital CV built with Astro, Tailwind CSS, and TypeScript, based on [Astro Sphere](https://github.com/markhorn-dev/astro-sphere). Original licensing is retained in LICENSE.
 
-## 🚀 Deploy your own
+## Development
 
-[![Deploy with Vercel](_deploy_vercel.svg)](https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-sphere)  [![Deploy with Netlify](_deploy_netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-sphere)
+Requires Node.js 24 and npm (matching the Vercel project runtime).
 
-## 📋 Features
+```sh
+npm ci
+npm run dev
+npm run build
+npm run preview
+```
 
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
-- ✅ Searchable content (posts and projects)
+## Content
 
-## 💯 Lighthouse score
-![Astro Sphere Lighthouse Score](_lighthouse.png)
+- Homepage: `src/pages/index.astro`
+- Selected career history: `src/content/work/`
+- Engineering highlights: `src/content/projects/`
+- Identity and navigation: `src/consts.ts`
+- Printable CV: `/resume`, using the same work collection as the experience page. Use Print / save as PDF.
+- Dates use ISO month-start values for reliable parsing; only month and year are displayed, in UTC.
 
-## 🕊️ Lightweight
-All pages under 100kb (including fonts)
+The selected timeline omits Granicus and the earlier internship. Official job titles are retained; frontend leadership responsibilities are described separately. Confidential client work is described only in general terms.
 
-## ⚡︎ Fast
-Rendered in ~40ms on localhost
+## Deployment
 
-## 📄 Configuration
+The canonical domain is `https://axelfernandez.vercel.app`. The previous `afernandezdev.vercel.app` address redirects permanently to it, preserving paths and query strings.
 
-The blog posts on the demo serve as the documentation and configuration.
+Use `npm run build` and publish `dist/`. Review the pull request and any Vercel preview before merging. No production deployment is performed by the refresh itself.
 
-## 💻 Commands
+## Maintenance
 
-All commands are run from the root of the project, from a terminal:
+Run `npm audit` when updating dependencies. The repository renders a static site; audit reports can include development tooling as well as browser dependencies. Do not treat dependency audit counts as proof that the production website is exploitable.
 
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
+## Interactive project lab
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run dev:network`     | Starts dev server on local network               |
-| `npm run sync`            | Generates TypeScript types for all Astro modules.|
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run preview:network` | Starts preview server on local network           |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-| `npm run lint`            | Run ESLint                                       |
-| `npm run lint:fix`        | Auto-fix ESLint issues                           |
+`/demos/` links to eight new browser adaptations and the existing ocean demo. The new routes are `pacman`, `evolving-car`, `poison`, `tic-tac-toe`, `battlefield`, `dou-shou-qi`, `sorting`, and `graphs`. Project catalog entries link directly to the relevant demo; the algorithms article links both sorting and graphs.
 
-## 🗺️ Roadmap
+These are 2026 browser implementations of earlier project ideas, not original executables. Original dates, team credits, restricted-source labels, and model limitations are retained. No private source snapshots, sprites, binaries, student IDs, or old environments are bundled. Pacman is a single-maze chase game with A* play, ghosts, and manual controls, the car uses a simplified hill model with a new evolutionary loop, and Poison is implemented from an archived brief. The battlefield uses the Java unit stats with corrected movement and damage rules. Jungle uses the documented river/trap variant linked from its page.
 
-A few features I plan to implement
-- ⬜ Code Blocks - copy to clipboard
-- ⬜ Article Pages - Table of Contents
-- ⬜ Article Pages - Share on social media
+Run `npm run test:demos` for sorting invariants, shortest-path cross-checks, A* route validity, exhaustive human continuations against minimax, Jungle special moves, battlefield bounds, evolution determinism/fitness, and complete seeded Poison games with deck conservation. `npm run build` checks types and generates the static routes.
 
-## ✨ Acknowledgement
-
-Repo inspired by [Mark Horn](https://github.com/markhorn-dev/astro-sphere)
-
-
-## 🏛️ License
-
-MIT
-
-# 0.0.1 Deploy
-
-First version is a copy of the website built by Mark Horn. 
-My intention is to really exploit this template and build something on top that suits my personality and engineer perspective.
+All animations start paused and stop on page visibility changes. Board controls are native buttons; canvas demos have text summaries/tables, and Pacman has arrow/WASD controls and an on-screen direction pad. Demos run locally in the visitor's browser without external APIs or server computation.

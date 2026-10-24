@@ -6,6 +6,8 @@ import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import { WORK } from "@consts"
 
+import { formatWorkDate } from "@lib/work"
+
 const collection = await getCollection("work")
 
 collection.sort((a, b) => new Date(b.data.dateStart).getTime() - new Date(a.data.dateStart).getTime())
@@ -17,23 +19,13 @@ const work = await Promise.all(
   })
 )
 
-function formatWorkDate(input: Date | string) {
-  if (typeof input === "string") return input
-
-  const month = input.toLocaleDateString("en-US", {
-    month: "short",
-  })
-
-  const year = new Date(input).getFullYear()
-  return `${month} ${year}`
-}
 ---
 
 <PageLayout title={WORK.TITLE} description={WORK.DESCRIPTION}>
   <TopLayout>
-    <div class="animate page-heading">
+    <h1 class="page-heading text-4xl">
       {WORK.TITLE}
-    </div>
+    </h1>
   </TopLayout>
   <BottomLayout>
     <ul>

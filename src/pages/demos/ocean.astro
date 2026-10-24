@@ -1,0 +1,143 @@
+---
+import PageLayout from "@layouts/PageLayout.astro"
+---
+<PageLayout title="Ocean ecosystem" description="Explore a browser adaptation of a collaborative Processing food-chain simulation.">
+  <div class="ocean-page">
+    <a href="/projects/early-ocean-simulation/" class="back">← Original project & credits</a>
+    <p class="eyebrow">Interactive adaptation · 2026</p>
+    <h1>A small ocean.<br /><span>A thousand interactions.</span></h1>
+    <p class="intro">Plant a food source. Add a hunter. Watch simple rules ripple through an ecosystem.</p>
+    <section class="ocean-shell" aria-label="Ocean ecosystem simulation">
+      <div class="toolbar">
+        <div><span class="dot"></span> <strong>Ocean lab</strong> <span class="running" data-state>Paused</span></div>
+        <div class="actions"><button id="play" type="button">Start simulation</button><button id="reset" type="button">Reset</button></div>
+      </div>
+      <div class="viewport">
+        <canvas id="ocean" width="960" height="540" aria-label="Animated ocean food chain. Use the controls below to add organisms and change the current." role="img"></canvas>
+        <p class="canvas-note">Algae → Prey → Predator → Apex predator</p>
+      </div>
+      <div class="population" aria-label="Current population">
+        <div><i style="--species:#69d59b"></i>Algae <strong data-count="algae">54</strong></div>
+        <div><i style="--species:#7dd9ef"></i>Prey <strong data-count="prey">28</strong></div>
+        <div><i style="--species:#ffbd7b"></i>Predators <strong data-count="predator">5</strong></div>
+        <div><i style="--species:#e5a8ef"></i>Apex <strong data-count="apex">2</strong></div>
+      </div>
+      <div class="controls">
+        <fieldset><legend>Add life</legend><p>Use a button, or choose a species and tap the ocean.</p><div class="add-buttons"><button data-add="algae">+ Algae</button><button data-add="prey">+ Prey</button><button data-add="predator">+ Predator</button><button data-add="apex">+ Apex</button></div><label for="species">Tap to place <select id="species"><option value="algae">Algae</option><option value="prey">Prey</option><option value="predator">Predator</option><option value="apex">Apex predator</option></select></label></fieldset>
+        <fieldset><legend>See the invisible</legend><label><input id="flow" type="checkbox" /> Show ocean currents</label><label><input id="perception" type="checkbox" /> Show perception ranges</label><label for="current">Current strength <output id="current-value">0.55</output></label><input id="current" type="range" min="0" max="1.5" step="0.05" value="0.55" /></fieldset>
+        <fieldset><legend>Run an experiment</legend><label for="seed">World seed <input id="seed" type="number" min="0" max="999999" step="1" value="42" /></label><p>The same seed recreates the same starting world. Reset applies it.</p><p id="summary" role="status" aria-live="polite">89 organisms · Paused · 0 seconds</p></fieldset>
+      </div>
+    </section>
+    <div class="explanation"><section><h2>Every fish follows a few rules.</h2><p>Prey seek algae and flee hunters. Predators seek prey, while apex predators hunt both. Nearby fish separate, align, and move together. Feeding replenishes energy; enough energy allows reproduction.</p></section><section><h2>Change one thing. Observe.</h2><p>Add predators, switch off the current, or plant more algae. Populations can collapse. Reset gives you a fresh start. This is a simplified educational model, not a scientifically calibrated ocean.</p></section></div>
+    <p class="credits">A new browser interpretation of the Processing project by <strong>Andrés Brenes Maleaño, Axel Fernández Jiménez, and Bryand Flores Medina</strong>. Original sprites and desktop code are not bundled. <a href="https://github.com/axelfj/Simulacion-de-Jerarquia-Alimenticia-en-el-Oceano" target="_blank" rel="noopener noreferrer">Original source ↗</a> · <a href="https://github.com/axelfj/portfolio/tree/main/src/lib/ocean.ts" target="_blank" rel="noopener noreferrer">Browser simulation source ↗</a></p>
+    <noscript><p>The interactive simulation requires JavaScript. The original project description and source links remain available above.</p></noscript>
+  </div>
+</PageLayout>
+<script>
+  import { Ocean, LIMIT, type Species } from "../../lib/ocean"
+  const canvas = document.querySelector<HTMLCanvasElement>("#ocean")!
+  const ctx = canvas.getContext("2d")!
+  const play = document.querySelector<HTMLButtonElement>("#play")!
+  const reset = document.querySelector<HTMLButtonElement>("#reset")!
+  const flow = document.querySelector<HTMLInputElement>("#flow")!
+  const perception = document.querySelector<HTMLInputElement>("#perception")!
+  const current = document.querySelector<HTMLInputElement>("#current")!
+  const seed = document.querySelector<HTMLInputElement>("#seed")!
+  const select = document.querySelector<HTMLSelectElement>("#species")!
+  const summary = document.querySelector<HTMLElement>("#summary")!
+  let world = new Ocean(42), playing = false, last = 0, accumulated = 0, lastReport = -1, animation = 0, capped = false
+  const colors = { algae: "#69d59b", prey: "#7dd9ef", predator: "#ffbd7b", apex: "#e5a8ef" }
+  function report(force = false) {
+    if (!force && Math.floor(world.time / 2) === lastReport) return
+    lastReport = Math.floor(world.time / 2)
+    const counts = world.counts()
+    document.querySelectorAll<HTMLElement>("[data-count]").forEach(el => el.textContent = String(counts[el.dataset.count as Species]))
+    summary.textContent = `${world.agents.length}/${LIMIT} organisms · ${playing ? "Running" : "Paused"} · ${Math.floor(world.time)} seconds${capped ? " · Population limit reached" : ""}`
+    document.querySelector("[data-state]")!.textContent = playing ? "Running" : "Paused"
+  }
+  function draw() {
+    const gradient = ctx.createLinearGradient(0, 0, 0, 540)
+    gradient.addColorStop(0, "#102f42"); gradient.addColorStop(1, "#061d29")
+    ctx.fillStyle = gradient; ctx.fillRect(0, 0, 960, 540)
+    ctx.strokeStyle = "#9bdeed0a"; ctx.lineWidth = 1
+    for (let x = 0; x < 960; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 540); ctx.stroke() }
+    for (let y = 0; y < 540; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(960, y); ctx.stroke() }
+    if (flow.checked) {
+      ctx.strokeStyle = "#7dd9ef55"
+      for (let x = 30; x < 960; x += 60) for (let y = 30; y < 540; y += 60) {
+        const f = world.flow(x, y)
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + f.x * 2, y + f.y * 2); ctx.stroke()
+        ctx.fillStyle = "#7dd9ef66"; ctx.beginPath(); ctx.arc(x + f.x * 2, y + f.y * 2, 1.5, 0, Math.PI * 2); ctx.fill()
+      }
+    }
+    for (const a of world.agents) {
+      ctx.save(); ctx.translate(a.x, a.y)
+      if (perception.checked && a.kind !== "algae") { ctx.strokeStyle = colors[a.kind] + "20"; ctx.beginPath(); ctx.arc(0, 0, a.kind === "prey" ? 95 : a.kind === "predator" ? 145 : 170, 0, Math.PI * 2); ctx.stroke() }
+      ctx.fillStyle = colors[a.kind]
+      if (a.kind === "algae") { ctx.beginPath(); ctx.arc(0, 0, 3, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = "#69d59b55"; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 8); ctx.stroke() }
+      else {
+        ctx.rotate(Math.atan2(a.vy, a.vx)); const size = a.kind === "prey" ? 5 : a.kind === "predator" ? 8 : 11
+        ctx.beginPath(); ctx.ellipse(0, 0, size, size * 0.5, 0, 0, Math.PI * 2); ctx.fill()
+        ctx.beginPath(); ctx.moveTo(-size + 1, 0); ctx.lineTo(-size * 1.7, -size * 0.5); ctx.lineTo(-size * 1.7, size * 0.5); ctx.fill()
+        ctx.fillStyle = "#092533"; ctx.beginPath(); ctx.arc(size * 0.5, -1, 1.1, 0, Math.PI * 2); ctx.fill()
+      }
+      ctx.restore()
+    }
+  }
+  function tick(now: number) {
+    if (!playing) return
+    accumulated += Math.min((now - (last || now)) / 1000, 0.1); last = now
+    while (accumulated >= 1 / 30) { world.step(1 / 30); accumulated -= 1 / 30 }
+    draw(); report(); animation = requestAnimationFrame(tick)
+  }
+  function pause() { playing = false; cancelAnimationFrame(animation); play.textContent = "Resume simulation"; report(true) }
+  play.addEventListener("click", () => { if (playing) pause(); else { playing = true; last = 0; play.textContent = "Pause"; report(true); animation = requestAnimationFrame(tick) } })
+  reset.addEventListener("click", () => { pause(); const value = Number(seed.value); const safe = Number.isFinite(value) ? Math.max(0, Math.min(999999, Math.floor(value))) : 42; seed.value = String(safe); world = new Ocean(safe); world.current = Number(current.value); capped = false; accumulated = 0; lastReport = -1; play.textContent = "Start simulation"; draw(); report(true) })
+  function add(kind: Species, x?: number, y?: number) { capped = !world.add(kind, x, y); draw(); report(true) }
+  document.querySelectorAll<HTMLButtonElement>("[data-add]").forEach(button => button.addEventListener("click", () => add(button.dataset.add as Species)))
+  canvas.addEventListener("pointerdown", event => { const rect = canvas.getBoundingClientRect(); add(select.value as Species, (event.clientX - rect.left) / rect.width * 960, (event.clientY - rect.top) / rect.height * 540) })
+  current.addEventListener("input", () => { world.current = Number(current.value); document.querySelector("#current-value")!.textContent = current.value; draw() })
+  flow.addEventListener("change", draw); perception.addEventListener("change", draw)
+  document.addEventListener("visibilitychange", () => { if (document.hidden && playing) pause() })
+  document.addEventListener("astro:before-swap", () => { playing = false; cancelAnimationFrame(animation) }, { once: true })
+  draw(); report(true)
+</script>
+<style>
+  .ocean-page { max-width: 1120px; margin: 112px auto 80px; padding: 0 24px; }
+  .back { font-size: .9rem; text-decoration: underline; text-underline-offset: 4px; }
+  .eyebrow { margin-top: 44px; text-transform: uppercase; letter-spacing: .15em; font-size: .75rem; color: var(--accent); }
+  h1 { font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.1; letter-spacing: -.045em; margin: 16px 0 24px; }
+  h1 span { color: var(--accent); }
+  .intro { max-width: 550px; font-size: 1.1rem; margin-bottom: 32px; }
+  .ocean-shell { border: 1px solid #36515d; border-radius: 12px; overflow: hidden; background: #0b2432; color: #e7f2f3; }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 16px 20px; border-bottom: 1px solid #284653; }
+  .dot { display: inline-block; width: 8px; height: 8px; background: #9ab7e8; border-radius: 50%; margin-right: 7px; }
+  .running { font-size: .75rem; margin-left: 12px; color: #b8cdd1; }
+  .actions, .add-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+  button { background: #163b4a; color: #e7f2f3; border: 1px solid #50717c; border-radius: 5px; padding: 8px 12px; font-size: .85rem; cursor: pointer; }
+  #play { background: #9ab7e8; color: #17243a; border-color: #9ab7e8; font-weight: 700; }
+  button:hover { filter: brightness(1.15); }
+  button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid #e8bd76; outline-offset: 4px; }
+  .viewport { position: relative; }
+  canvas { display: block; width: 100%; aspect-ratio: 16 / 9; cursor: crosshair; }
+  .canvas-note { position: absolute; bottom: 10px; left: 16px; pointer-events: none; color: #b8d2d8; font-size: .7rem; background: #061d29cc; padding: 5px 8px; border-radius: 4px; }
+  .population { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #284653; border-bottom: 1px solid #284653; }
+  .population div { padding: 16px; display: flex; align-items: center; gap: 8px; font-size: .8rem; }
+  .population strong { margin-left: auto; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+  .population i { width: 7px; height: 7px; border-radius: 50%; background: var(--species); flex-shrink: 0; }
+  .controls { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 28px; padding: 24px; }
+  fieldset { min-width: 0; border: 0; padding: 0; }
+  legend { font-weight: 700; margin-bottom: 12px; }
+  fieldset p { font-size: .8rem; color: #b8cdd1; line-height: 1.6; margin: 0 0 14px; }
+  label { display: block; font-size: .8rem; margin: 12px 0; }
+  input[type="range"] { width: 100%; accent-color: #9ab7e8; }
+  input[type="checkbox"] { accent-color: #9ab7e8; margin-right: 8px; }
+  input[type="number"], select { display: block; width: 100%; background: #102f3d; border: 1px solid #50717c; color: #e7f2f3; padding: 8px; border-radius: 4px; margin-top: 8px; }
+  output { float: right; font-variant-numeric: tabular-nums; }
+  .explanation { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin: 48px 0; }
+  h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+  .explanation p, .credits { font-size: .9rem; line-height: 1.8; }
+  .credits { border-top: 1px solid #8a9d9f55; padding-top: 24px; }
+  .credits a { text-decoration: underline; text-underline-offset: 3px; }
+  @media(max-width: 700px) { .ocean-page { padding: 0 16px; margin-top: 96px; } .controls { grid-template-columns: 1fr; gap: 24px; padding: 20px; } .population { grid-template-columns: 1fr 1fr; } .population div { padding: 12px; } .explanation { grid-template-columns: 1fr; gap: 28px; } .canvas-note { font-size: .55rem; bottom: 4px; left: 4px; } }
+</style>

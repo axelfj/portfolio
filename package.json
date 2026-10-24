@@ -11,7 +11,8 @@
     "preview:network": "astro dev --host",
     "astro": "astro",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test:demos": "node tests/demos.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.12",
@@ -29,8 +30,10 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   },
+  "engines": {
+    "node": "24.x"
+  },
   "overrides": {
     "postcss-selector-parser": "^7.1.6"
-  },
-  "packageManager": "npm@11.9.0"
+  }
 }

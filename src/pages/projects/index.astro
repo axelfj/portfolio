@@ -1,29 +1,74 @@
 ---
 import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
-import TopLayout from "@layouts/TopLayout.astro"
-import BottomLayout from "@layouts/BottomLayout.astro"
-import Projects from "@components/Projects"
-import { PROJECTS } from "@consts"
-
-const projects = (await getCollection("projects"))
-  .filter(project => !project.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-
-const tags = [...new Set(projects.flatMap(project => project.data.tags))]
-  .sort((a, b) => a.localeCompare(b))
+import { demoLink } from '../../lib/demo-link'
+const projects = (await getCollection("projects")).filter(p => !p.data.draft).sort((a,b) => b.data.date.getTime() - a.data.date.getTime())
+const groups = [
+  { id: "simulations", title: "Simulations", description: "Local rules, moving agents, and experiments in emergent behavior." },
+  { id: "games", title: "Games", description: "Search, strategy, and the decisions behind a move." },
+  { id: "engineering", title: "Engineering", description: "Professional contributions and early explorations in algorithms and software design." },
+]
 ---
-
-<PageLayout title={PROJECTS.TITLE} description={PROJECTS.DESCRIPTION}>
-  <TopLayout>
-    <div class="animate page-heading">
-      {PROJECTS.TITLE}
+<PageLayout title="Projects" description="Explore games, simulations, and engineering projects, with original source links and collaborative credits.">
+  <div class="cv-home cv-list-page" data-project-catalog>
+    <p class="cv-eyebrow">Things I've built with others</p>
+    <h1>Projects.</h1>
+    <p class="cv-intro">Games, simulations, and engineering work. Explore original project archives, collaborative credits, and new browser adaptations.</p>
+    <p class="cv-actions"><a class="cv-button cv-primary" href="/demos/">Try the interactive demos ↗</a></p>
+    <div class="catalog-filters" role="group" aria-label="Filter projects" hidden>
+      <button type="button" data-filter="all" aria-pressed="true">All projects</button>
+      {groups.map(group => <button type="button" data-filter={group.id} aria-pressed="false">{group.title}</button>)}
     </div>
-  </TopLayout>
-  <BottomLayout>
-    <div class="animate">
-      WORK IN PROGRESS
-      <!-- <Projects client:load tags={tags} data={projects} /> -->
-    </div>
-  </BottomLayout>
+    <p class="catalog-count" aria-live="polite" aria-atomic="true" data-project-count>{projects.length} projects</p>
+    {groups.map(group => <section id={group.id} class="cv-section" data-project-group={group.id} aria-labelledby={group.id + "-title"}>
+      <h2 id={group.id + "-title"}>{group.title}</h2><p class="cv-intro">{group.description}</p>
+      <div class="cv-project-list">{projects.filter(p => p.data.category === group.id).map(project => <article class="cv-project">
+        <h3 class="text-2xl font-bold mb-4"><a href={"/projects/" + project.id + "/"}>{project.data.title} <span aria-hidden="true">↗</span></a></h3>
+        <p>{project.data.summary}</p>
+        {project.data.legacy && <p class="catalog-status">{project.data.demoStatus === "live" ? "Legacy project · New browser adaptation" : "Legacy · Project archive"}</p>}
+        <div class="cv-tags">{project.data.tags.filter(tag => tag !== "Early work").map(tag => <span>{tag}</span>)}</div>
+        {project.data.demoStatus && <p class="catalog-status">{project.data.demoStatus === "live" ? "Browser demo available" : project.data.demoStatus === "prototype" ? "Original prototype · browser demo planned" : "Original desktop project · browser demo planned"}</p>}
+        <div class="catalog-links">
+          <a href={"/projects/" + project.id + "/"} aria-label={"Read about " + project.data.title}>Explore project</a>
+          {project.data.repoUrl && <a href={project.data.repoUrl} target="_blank" rel="noopener noreferrer" aria-label={"View " + project.data.title + " source on GitHub"}>{project.data.sourceAccess === "private" ? "GitHub · access restricted" : "View code on GitHub"}<span class="sr-only"> (opens in a new tab)</span></a>}
+          {project.data.demoStatus === "live" && project.data.demoUrl && <a href={demoLink(project.data.demoUrl)}>Play demo</a>}
+        </div>
+      </article>)}</div>
+    </section>)}
+  </div>
 </PageLayout>
+<script>
+  function initializeCatalog() {
+    const catalog = document.querySelector<HTMLElement>("[data-project-catalog]")
+    if (!catalog || catalog.dataset.initialized) return
+    catalog.dataset.initialized = "true"
+    const filters = catalog.querySelector<HTMLElement>(".catalog-filters")
+    if (filters) filters.hidden = false
+    const buttons = catalog.querySelectorAll<HTMLButtonElement>("[data-filter]")
+    const sections = catalog.querySelectorAll<HTMLElement>("[data-project-group]")
+    const count = catalog.querySelector("[data-project-count]")
+    buttons.forEach(button => button.addEventListener("click", () => {
+      const selected = button.dataset.filter
+      buttons.forEach(item => item.setAttribute("aria-pressed", String(item === button)))
+      let visibleCount = 0
+      sections.forEach(section => {
+        section.hidden = selected !== "all" && section.dataset.projectGroup !== selected
+        if (!section.hidden) visibleCount += section.querySelectorAll(".cv-project").length
+      })
+      if (count) count.textContent = `${visibleCount} ${visibleCount === 1 ? "project" : "projects"}`
+    }))
+  }
+  initializeCatalog()
+  document.addEventListener("astro:page-load", initializeCatalog)
+</script>
+<style>
+  .catalog-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 16px; }
+  .catalog-filters[hidden], section[hidden] { display: none; }
+  .catalog-filters button { padding: 8px 16px; border: 1px solid #a3a3a3; border-radius: 4px; }
+  .catalog-filters button[aria-pressed="true"] { background: var(--accent-solid); border-color: var(--accent-solid); color: white; }
+  .catalog-filters button:focus-visible, a:focus-visible { outline: 3px solid var(--accent-solid); outline-offset: 4px; }
+  .catalog-count, .catalog-status { font-size: .875rem; }
+  .catalog-status { margin-top: 20px; }
+  .catalog-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 20px; }
+  .catalog-links a { text-decoration: underline; text-underline-offset: 4px; }
+</style>
