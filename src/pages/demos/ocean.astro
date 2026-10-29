@@ -175,7 +175,10 @@ import PageLayout from "@layouts/PageLayout.astro"
     animation = requestAnimationFrame(tick)
   }
   function pause(reason = "Paused") { playing = false; cancelAnimationFrame(animation); accumulated = 0; play.textContent = "Resume simulation"; performanceLabel.textContent = reason; draw(); report(true) }
-  play.addEventListener("click", () => { if (playing) pause(); else if (!document.hidden && inView) {
+  play.addEventListener("click", () => { if (playing) pause(); else if (!document.hidden) {
+    // Keyboard focus can reach Start while the canvas is outside a short viewport.
+    // Bring the requested experiment into view rather than silently ignoring Start.
+    if (!inView) canvas.scrollIntoView({ block: "center", behavior: "instant" })
     for (const a of world.agents) { const old = previous.get(a); if (old) { old.x = a.x; old.y = a.y } }
     resetBenchmark(); playing = true; last = 0; sampleStarted = performance.now(); frames = 0; workTime = 0; droppedTime = 0; play.textContent = "Pause"; report(true); animation = requestAnimationFrame(tick)
   } })
