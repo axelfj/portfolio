@@ -12,7 +12,11 @@
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test:demos": "node tests/demos.mjs"
+    "test:demos": "node tests/demos.mjs",
+    "test:ocean": "node scripts/test-ocean.mjs",
+    "benchmark:ocean": "node scripts/benchmark-ocean.mjs",
+    "benchmark:ocean:prepare": "node scripts/prepare-ocean-baseline.mjs",
+    "benchmark:ocean:clean": "node scripts/prepare-ocean-baseline.mjs --clean"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.12",
