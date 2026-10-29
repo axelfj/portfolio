@@ -5,36 +5,37 @@ import PageLayout from "@layouts/PageLayout.astro"
   <div class="ocean-page">
     <a href="/projects/early-ocean-simulation/" class="back">← Original project & credits</a>
     <p class="eyebrow">Interactive adaptation · 2026</p>
-    <h1>A small ocean.<br /><span>A thousand interactions.</span></h1>
+    <h1>A living ocean.<br /><span>A thousand interactions.</span></h1>
     <p class="intro">Plant a food source. Add a hunter. Watch simple rules ripple through an ecosystem.</p>
     <section class="ocean-shell" aria-label="Ocean ecosystem simulation">
       <div class="toolbar">
         <div><span class="dot"></span> <strong>Ocean lab</strong> <span class="running" data-state>Paused</span></div>
         <div class="actions"><button id="play" type="button">Start simulation</button><button id="reset" type="button">Reset</button></div>
       </div>
+      <p id="benchmark" hidden aria-live="off">Press Start for a ten-second benchmark sample.</p>
       <div class="viewport">
         <canvas id="ocean" width="960" height="540" aria-label="Animated ocean food chain. Use the controls below to add organisms and change the current." role="img"></canvas>
         <p class="canvas-note">Algae → Prey → Predator → Apex predator</p>
       </div>
       <div class="population" aria-label="Current population">
-        <div><i style="--species:#69d59b"></i>Algae <strong data-count="algae">54</strong></div>
-        <div><i style="--species:#7dd9ef"></i>Prey <strong data-count="prey">28</strong></div>
-        <div><i style="--species:#ffbd7b"></i>Predators <strong data-count="predator">5</strong></div>
-        <div><i style="--species:#e5a8ef"></i>Apex <strong data-count="apex">2</strong></div>
+        <div><i style="--species:#69d59b"></i>Algae <strong data-count="algae">378</strong></div>
+        <div><i style="--species:#7dd9ef"></i>Prey <strong data-count="prey">196</strong></div>
+        <div><i style="--species:#ffbd7b"></i>Predators <strong data-count="predator">35</strong></div>
+        <div><i style="--species:#e5a8ef"></i>Apex <strong data-count="apex">14</strong></div>
       </div>
       <div class="controls">
-        <fieldset><legend>Add life</legend><p>Use a button, or choose a species and tap the ocean.</p><div class="add-buttons"><button data-add="algae">+ Algae</button><button data-add="prey">+ Prey</button><button data-add="predator">+ Predator</button><button data-add="apex">+ Apex</button></div><label for="species">Tap to place <select id="species"><option value="algae">Algae</option><option value="prey">Prey</option><option value="predator">Predator</option><option value="apex">Apex predator</option></select></label></fieldset>
-        <fieldset><legend>See the invisible</legend><label><input id="flow" type="checkbox" /> Show ocean currents</label><label><input id="perception" type="checkbox" /> Show perception ranges</label><label for="current">Current strength <output id="current-value">0.55</output></label><input id="current" type="range" min="0" max="1.5" step="0.05" value="0.55" /></fieldset>
-        <fieldset><legend>Run an experiment</legend><label for="seed">World seed <input id="seed" type="number" min="0" max="999999" step="1" value="42" /></label><p>The same seed recreates the same starting world. Reset applies it.</p><p id="summary" role="status" aria-live="polite">89 organisms · Paused · 0 seconds</p></fieldset>
+        <fieldset><legend>Add life</legend><p>Use a button, or choose a species and tap the ocean.</p><div class="add-buttons"><button data-add="algae">+ Algae</button><button data-add="prey">+ Prey</button><button data-add="predator">+ Predator</button><button data-add="apex">+ Apex</button></div><label for="batch">Add at once <select id="batch"><option value="1">1 organism</option><option value="10" selected>10 organisms</option><option value="30">30 organisms</option></select></label><label for="species">Tap to place <select id="species"><option value="algae">Algae</option><option value="prey">Prey</option><option value="predator">Predator</option><option value="apex">Apex predator</option></select></label></fieldset>
+        <fieldset><legend>See the invisible</legend><label><input id="flow" type="checkbox" /> Show ocean currents</label><label><input id="perception" type="checkbox" /> Show perception ranges (24 sampled)</label><label for="current">Current strength <output id="current-value">0.55</output></label><input id="current" type="range" min="0" max="1.5" step="0.05" value="0.55" /><p id="performance" aria-live="off">Rendering starts when you press Start.</p></fieldset>
+        <fieldset><legend>Run an experiment</legend><label for="density">Ecosystem preset <select id="density"><option value="3">Coastal · 267 organisms</option><option value="7" selected>Reef · 623 organisms</option><option value="12">Open ocean · 1,068 organisms</option></select></label><label for="seed">World seed <input id="seed" type="number" min="0" max="999999" step="1" value="42" /></label><p>Reset applies the preset and seed. Worlds can grow to 2,400 organisms. Choose Coastal if your device needs a lighter world.</p><p id="summary" role="status" aria-live="polite">623 organisms · Paused · 0 seconds</p></fieldset>
       </div>
     </section>
-    <div class="explanation"><section><h2>Every fish follows a few rules.</h2><p>Prey seek algae and flee hunters. Predators seek prey, while apex predators hunt both. Nearby fish separate, align, and move together. Feeding replenishes energy; enough energy allows reproduction.</p></section><section><h2>Change one thing. Observe.</h2><p>Add predators, switch off the current, or plant more algae. Populations can collapse. Reset gives you a fresh start. This is a simplified educational model, not a scientifically calibrated ocean.</p></section></div>
+    <div class="explanation"><section><h2>Every fish follows a few rules.</h2><p>Prey seek algae and flee hunters. Predators seek prey, while apex predators hunt both. Nearby fish separate, align, and move together. Feeding replenishes energy; enough energy allows reproduction.</p></section><section><h2>Change one thing. Observe.</h2><p>Add predators, switch off the current, or plant more algae. Populations can collapse. Reset gives you a fresh start. Dense worlds take more work per frame; choose Coastal for lighter devices. This is a simplified educational model, not a scientifically calibrated ocean.</p></section></div>
     <p class="credits">A new browser interpretation of the Processing project by <strong>Andrés Brenes Maleaño, Axel Fernández Jiménez, and Bryand Flores Medina</strong>. Original sprites and desktop code are not bundled. <a href="https://github.com/axelfj/Simulacion-de-Jerarquia-Alimenticia-en-el-Oceano" target="_blank" rel="noopener noreferrer">Original source ↗</a> · <a href="https://github.com/axelfj/portfolio/tree/main/src/lib/ocean.ts" target="_blank" rel="noopener noreferrer">Browser simulation source ↗</a></p>
     <noscript><p>The interactive simulation requires JavaScript. The original project description and source links remain available above.</p></noscript>
   </div>
 </PageLayout>
 <script>
-  import { Ocean, LIMIT, type Species } from "../../lib/ocean"
+  import { Ocean, LIMIT, type Species, type Agent } from "../../lib/ocean"
   const canvas = document.querySelector<HTMLCanvasElement>("#ocean")!
   const ctx = canvas.getContext("2d")!
   const play = document.querySelector<HTMLButtonElement>("#play")!
@@ -45,23 +46,78 @@ import PageLayout from "@layouts/PageLayout.astro"
   const seed = document.querySelector<HTMLInputElement>("#seed")!
   const select = document.querySelector<HTMLSelectElement>("#species")!
   const summary = document.querySelector<HTMLElement>("#summary")!
-  let world = new Ocean(42), playing = false, last = 0, accumulated = 0, lastReport = -1, animation = 0, capped = false
+  const density = document.querySelector<HTMLSelectElement>("#density")!
+  const batch = document.querySelector<HTMLSelectElement>("#batch")!
+  const performanceLabel = document.querySelector<HTMLElement>("#performance")!
+  const countLabels = [...document.querySelectorAll<HTMLElement>("[data-count]")]
+  const stateLabel = document.querySelector<HTMLElement>("[data-state]")!
+  const benchmark = document.querySelector<HTMLElement>("#benchmark")!
+  const benchmarkEnabled = new URLSearchParams(location.search).get("benchmark") === "1"
+  benchmark.hidden = !benchmarkEnabled
+  let benchmarkStarted = 0, benchmarkComplete = false
+  let benchmarkWork: number[] = []
+  function resetBenchmark() {
+    benchmarkStarted = 0; benchmarkComplete = false; benchmarkWork = []
+    for (const key of ["fps", "averageMs", "p95Ms", "population", "seconds"]) delete benchmark.dataset[key]
+    benchmark.textContent = "Keep the ocean visible for a ten-second benchmark sample."
+  }
+  let world = new Ocean(42, LIMIT, 7), playing = false, last = 0, accumulated = 0, lastReport = -1, animation = 0, capped = false
+  let frames = 0, workTime = 0, sampleStarted = 0, droppedTime = 0
+  let inView = true
+  const STEP = 1 / 30
+  const previous = new WeakMap<Agent, { x: number; y: number }>()
   const colors = { algae: "#69d59b", prey: "#7dd9ef", predator: "#ffbd7b", apex: "#e5a8ef" }
   function report(force = false) {
     if (!force && Math.floor(world.time / 2) === lastReport) return
     lastReport = Math.floor(world.time / 2)
     const counts = world.counts()
-    document.querySelectorAll<HTMLElement>("[data-count]").forEach(el => el.textContent = String(counts[el.dataset.count as Species]))
+    countLabels.forEach(el => el.textContent = String(counts[el.dataset.count as Species]))
     summary.textContent = `${world.agents.length}/${LIMIT} organisms · ${playing ? "Running" : "Paused"} · ${Math.floor(world.time)} seconds${capped ? " · Population limit reached" : ""}`
-    document.querySelector("[data-state]")!.textContent = playing ? "Running" : "Paused"
+    stateLabel.textContent = playing ? "Running" : "Paused"
+  }
+  // Static scenery is painted once. Sprite variants are also cached so drawing
+  // more fish does not create hundreds of paths and canvas state changes.
+  const background = document.createElement("canvas")
+  background.width = 960; background.height = 540
+  const bg = background.getContext("2d")!
+  {
+    const gradient = bg.createLinearGradient(0, 0, 0, 540)
+    gradient.addColorStop(0, "#102f42"); gradient.addColorStop(1, "#061d29")
+    bg.fillStyle = gradient; bg.fillRect(0, 0, 960, 540)
+    // Diffuse surface light and a planted seabed.
+    for (let x = -100; x < 1000; x += 170) {
+      bg.fillStyle = "#9bdeed06"; bg.beginPath(); bg.moveTo(x, 0); bg.lineTo(x + 70, 0); bg.lineTo(x + 230, 540); bg.lineTo(x + 100, 540); bg.fill()
+    }
+    bg.fillStyle = "#12434b"; bg.beginPath(); bg.moveTo(0, 540)
+    for (let x = 0; x <= 960; x += 12) bg.lineTo(x, 513 + Math.sin(x / 75) * 12)
+    bg.lineTo(960, 540); bg.fill()
+    for (let x = 16; x < 960; x += 31) {
+      bg.strokeStyle = "#447c6b77"; bg.lineWidth = 3
+      bg.beginPath(); bg.moveTo(x, 535); bg.quadraticCurveTo(x - 12, 510, x + 5, 480 + Math.sin(x) * 16); bg.stroke()
+    }
+  }
+  const sprites = new Map<Species, HTMLCanvasElement[]>()
+  for (const kind of ["algae", "prey", "predator", "apex"] as Species[]) {
+    const variants: HTMLCanvasElement[] = []
+    for (let direction = 0; direction < (kind === "algae" ? 1 : 48); direction++) {
+      const sprite = document.createElement("canvas"); sprite.width = sprite.height = 48
+      const paint = sprite.getContext("2d")!; paint.translate(24, 24)
+      paint.rotate(direction / 48 * Math.PI * 2); paint.fillStyle = colors[kind]
+      if (kind === "algae") {
+        paint.beginPath(); paint.arc(0, 0, 3, 0, Math.PI * 2); paint.fill()
+        paint.strokeStyle = "#69d59b55"; paint.beginPath(); paint.moveTo(0, 0); paint.lineTo(0, 8); paint.stroke()
+      } else {
+        const size = kind === "prey" ? 5 : kind === "predator" ? 8 : 11
+        paint.beginPath(); paint.ellipse(0, 0, size, size * .5, 0, 0, Math.PI * 2); paint.fill()
+        paint.beginPath(); paint.moveTo(-size + 1, 0); paint.lineTo(-size * 1.7, -size * .5); paint.lineTo(-size * 1.7, size * .5); paint.fill()
+        paint.fillStyle = "#092533"; paint.beginPath(); paint.arc(size * .5, -1, 1.1, 0, Math.PI * 2); paint.fill()
+      }
+      variants.push(sprite)
+    }
+    sprites.set(kind, variants)
   }
   function draw() {
-    const gradient = ctx.createLinearGradient(0, 0, 0, 540)
-    gradient.addColorStop(0, "#102f42"); gradient.addColorStop(1, "#061d29")
-    ctx.fillStyle = gradient; ctx.fillRect(0, 0, 960, 540)
-    ctx.strokeStyle = "#9bdeed0a"; ctx.lineWidth = 1
-    for (let x = 0; x < 960; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 540); ctx.stroke() }
-    for (let y = 0; y < 540; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(960, y); ctx.stroke() }
+    ctx.drawImage(background, 0, 0)
     if (flow.checked) {
       ctx.strokeStyle = "#7dd9ef55"
       for (let x = 30; x < 960; x += 60) for (let y = 30; y < 540; y += 60) {
@@ -70,36 +126,80 @@ import PageLayout from "@layouts/PageLayout.astro"
         ctx.fillStyle = "#7dd9ef66"; ctx.beginPath(); ctx.arc(x + f.x * 2, y + f.y * 2, 1.5, 0, Math.PI * 2); ctx.fill()
       }
     }
+    let ranges = 0
     for (const a of world.agents) {
-      ctx.save(); ctx.translate(a.x, a.y)
-      if (perception.checked && a.kind !== "algae") { ctx.strokeStyle = colors[a.kind] + "20"; ctx.beginPath(); ctx.arc(0, 0, a.kind === "prey" ? 95 : a.kind === "predator" ? 145 : 170, 0, Math.PI * 2); ctx.stroke() }
-      ctx.fillStyle = colors[a.kind]
-      if (a.kind === "algae") { ctx.beginPath(); ctx.arc(0, 0, 3, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = "#69d59b55"; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 8); ctx.stroke() }
-      else {
-        ctx.rotate(Math.atan2(a.vy, a.vx)); const size = a.kind === "prey" ? 5 : a.kind === "predator" ? 8 : 11
-        ctx.beginPath(); ctx.ellipse(0, 0, size, size * 0.5, 0, 0, Math.PI * 2); ctx.fill()
-        ctx.beginPath(); ctx.moveTo(-size + 1, 0); ctx.lineTo(-size * 1.7, -size * 0.5); ctx.lineTo(-size * 1.7, size * 0.5); ctx.fill()
-        ctx.fillStyle = "#092533"; ctx.beginPath(); ctx.arc(size * 0.5, -1, 1.1, 0, Math.PI * 2); ctx.fill()
-      }
-      ctx.restore()
+      const old = playing ? previous.get(a) : undefined
+      const alpha = Math.min(1, accumulated / STEP)
+      const x = old ? old.x + (a.x - old.x) * alpha : a.x
+      const y = old ? old.y + (a.y - old.y) * alpha : a.y
+      if (perception.checked && a.kind !== "algae" && ranges++ < 24) { ctx.strokeStyle = colors[a.kind] + "20"; ctx.beginPath(); ctx.arc(x, y, a.kind === "prey" ? 95 : a.kind === "predator" ? 145 : 170, 0, Math.PI * 2); ctx.stroke() }
+      const direction = a.kind === "algae" ? 0 : Math.round((Math.atan2(a.vy, a.vx) + Math.PI * 2) / (Math.PI * 2) * 48) % 48
+      ctx.drawImage(sprites.get(a.kind)![direction], x - 24, y - 24)
     }
   }
   function tick(now: number) {
     if (!playing) return
-    accumulated += Math.min((now - (last || now)) / 1000, 0.1); last = now
-    while (accumulated >= 1 / 30) { world.step(1 / 30); accumulated -= 1 / 30 }
-    draw(); report(); animation = requestAnimationFrame(tick)
+    const started = performance.now()
+    const elapsed = (now - (last || now)) / 1000; last = now
+    accumulated += Math.min(elapsed, .1); droppedTime += Math.max(0, elapsed - .1)
+    let steps = 0
+    while (accumulated >= STEP && steps < 3) {
+      for (const a of world.agents) {
+        const old = previous.get(a)
+        if (old) { old.x = a.x; old.y = a.y }
+        else previous.set(a, { x: a.x, y: a.y })
+      }
+      world.step(STEP); accumulated -= STEP; steps++
+    }
+    draw(); report()
+    const frameWork = performance.now() - started
+    workTime += frameWork; frames++
+    if (benchmarkEnabled && !benchmarkComplete) {
+      if (!benchmarkStarted) benchmarkStarted = now
+      benchmarkWork.push(frameWork)
+      const seconds = (now - benchmarkStarted) / 1000
+      if (seconds >= 10) {
+        const sorted = [...benchmarkWork].sort((a, b) => a - b)
+        const fps = benchmarkWork.length / seconds
+        const average = benchmarkWork.reduce((sum, value) => sum + value, 0) / benchmarkWork.length
+        const p95 = sorted[Math.min(sorted.length - 1, Math.ceil(sorted.length * .95) - 1)]
+        Object.assign(benchmark.dataset, { fps: fps.toFixed(2), averageMs: average.toFixed(3), p95Ms: p95.toFixed(3), population: String(world.agents.length), seconds: seconds.toFixed(3) })
+        benchmark.textContent = `10-second sample: ${fps.toFixed(1)} rendered fps · ${average.toFixed(2)} ms average work · ${p95.toFixed(2)} ms p95 work · ${world.agents.length} organisms`
+        benchmarkComplete = true
+      }
+    }
+    if (now - sampleStarted >= 1000) {
+      performanceLabel.textContent = `${Math.round(frames * 1000 / (now - sampleStarted))} rendered fps · ${(workTime / frames).toFixed(1)} ms work/frame${droppedTime > .1 ? " · Simulation slows under load" : ""}`
+      frames = 0; workTime = 0; sampleStarted = now; droppedTime = 0
+    }
+    animation = requestAnimationFrame(tick)
   }
-  function pause() { playing = false; cancelAnimationFrame(animation); play.textContent = "Resume simulation"; report(true) }
-  play.addEventListener("click", () => { if (playing) pause(); else { playing = true; last = 0; play.textContent = "Pause"; report(true); animation = requestAnimationFrame(tick) } })
-  reset.addEventListener("click", () => { pause(); const value = Number(seed.value); const safe = Number.isFinite(value) ? Math.max(0, Math.min(999999, Math.floor(value))) : 42; seed.value = String(safe); world = new Ocean(safe); world.current = Number(current.value); capped = false; accumulated = 0; lastReport = -1; play.textContent = "Start simulation"; draw(); report(true) })
-  function add(kind: Species, x?: number, y?: number) { capped = !world.add(kind, x, y); draw(); report(true) }
+  function pause(reason = "Paused") { playing = false; cancelAnimationFrame(animation); accumulated = 0; play.textContent = "Resume simulation"; performanceLabel.textContent = reason; draw(); report(true) }
+  play.addEventListener("click", () => { if (playing) pause(); else if (!document.hidden) {
+    // Keyboard focus can reach Start while the canvas is outside a short viewport.
+    // Bring the requested experiment into view rather than silently ignoring Start.
+    if (!inView) canvas.scrollIntoView({ block: "center", behavior: "instant" })
+    for (const a of world.agents) { const old = previous.get(a); if (old) { old.x = a.x; old.y = a.y } }
+    resetBenchmark(); playing = true; last = 0; sampleStarted = performance.now(); frames = 0; workTime = 0; droppedTime = 0; play.textContent = "Pause"; report(true); animation = requestAnimationFrame(tick)
+  } })
+  reset.addEventListener("click", () => { pause(); resetBenchmark(); const value = Number(seed.value); const safe = Number.isFinite(value) ? Math.max(0, Math.min(999999, Math.floor(value))) : 42; seed.value = String(safe); world = new Ocean(safe, LIMIT, Number(density.value)); world.current = Number(current.value); capped = false; accumulated = 0; lastReport = -1; play.textContent = "Start simulation"; draw(); report(true) })
+  function add(kind: Species, x?: number, y?: number) {
+    capped = false
+    for (let i = 0; i < Number(batch.value); i++) {
+      const angle = i * 2.4, radius = Math.sqrt(i) * 5
+      if (!world.add(kind, x === undefined ? undefined : x + Math.cos(angle) * radius, y === undefined ? undefined : y + Math.sin(angle) * radius)) { capped = true; break }
+    }
+    draw(); report(true)
+  }
   document.querySelectorAll<HTMLButtonElement>("[data-add]").forEach(button => button.addEventListener("click", () => add(button.dataset.add as Species)))
   canvas.addEventListener("pointerdown", event => { const rect = canvas.getBoundingClientRect(); add(select.value as Species, (event.clientX - rect.left) / rect.width * 960, (event.clientY - rect.top) / rect.height * 540) })
   current.addEventListener("input", () => { world.current = Number(current.value); document.querySelector("#current-value")!.textContent = current.value; draw() })
   flow.addEventListener("change", draw); perception.addEventListener("change", draw)
-  document.addEventListener("visibilitychange", () => { if (document.hidden && playing) pause() })
-  document.addEventListener("astro:before-swap", () => { playing = false; cancelAnimationFrame(animation) }, { once: true })
+  const onVisibilityChange = () => { if (document.hidden && playing) pause("Paused while the tab is hidden") }
+  document.addEventListener("visibilitychange", onVisibilityChange)
+  const observer = new IntersectionObserver(entries => { inView = entries[0].isIntersecting; if (!inView && playing) pause("Paused while the ocean is offscreen") })
+  observer.observe(canvas)
+  document.addEventListener("astro:before-swap", () => { playing = false; cancelAnimationFrame(animation); observer.disconnect(); document.removeEventListener("visibilitychange", onVisibilityChange) }, { once: true })
   draw(); report(true)
 </script>
 <style>
@@ -113,6 +213,7 @@ import PageLayout from "@layouts/PageLayout.astro"
   .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 16px 20px; border-bottom: 1px solid #284653; }
   .dot { display: inline-block; width: 8px; height: 8px; background: #9ab7e8; border-radius: 50%; margin-right: 7px; }
   .running { font-size: .75rem; margin-left: 12px; color: #b8cdd1; }
+  #benchmark { padding: 12px 20px; font-size: .8rem; font-variant-numeric: tabular-nums; color: #b8cdd1; }
   .actions, .add-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
   button { background: #163b4a; color: #e7f2f3; border: 1px solid #50717c; border-radius: 5px; padding: 8px 12px; font-size: .85rem; cursor: pointer; }
   #play { background: #9ab7e8; color: #17243a; border-color: #9ab7e8; font-weight: 700; }
